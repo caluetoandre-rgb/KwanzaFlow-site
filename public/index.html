@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="pt-AO" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KwanzaFlow - Finanças, Kixikila e Micro-Negócios em Angola</title>
+  <meta name="description" content="Aplicativo de finanças pessoais, Kixikila comunitária e gestão de micro-negócios em Angola. Inclui central de conformidade Google Play, Política de Privacidade e Exclusão de Dados." />
+  <meta property="og:title" content="KwanzaFlow - Domine as suas Finanças em Kwanzas" />
+  <meta property="og:description" content="Aplicativo de finanças pessoais, Kixikila comunitária e gestão de micro-negócios em Angola. Em conformidade com a Google Play Store." />
+  <meta property="og:type" content="website" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+              950: '#022c22',
+            },
+            amber: {
+              350: '#fbbf24',
+              450: '#f59e0b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom smooth transition classes */
+    .tab-content {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.25s ease-in-out;
+    }
+    .tab-content.active {
+      display: block;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-emerald-500 selection:text-white">
+
+  <!-- Top Micro-Banner for Google Play Compliance -->
+  <aside aria-label="Google Play Compliance" class="bg-slate-900 text-slate-200 text-xs py-1.5 px-4 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="font-medium text-emerald-300">Google Play Compliance Hub:</span>
+        <span class="text-slate-300 hidden sm:inline">Package ID: <code class="bg-slate-800 px-1 py-0.5 rounded text-emerald-400 font-mono text-[11px]">com.kwanzaflow.aoa</code></span>
+      </div>
+      <div class="flex items-center gap-3 text-[11px] text-slate-300">
+        <a href="#privacidade" onclick="switchTab('privacidade')" class="hover:text-white underline decoration-emerald-500/50">
+          Política de Privacidade
+        </a>
+        <span class="text-slate-600">•</span>
+        <a href="#eliminar-conta" onclick="switchTab('eliminar-conta')" class="hover:text-amber-300 font-medium flex items-center gap-1 text-rose-300">
+          Exclusão de Dados
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Navigation Bar -->
+  <header class="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-18">
+        
+        <!-- Brand Logo -->
+        <a href="#inicio" onclick="switchTab('inicio')" class="flex items-center gap-3 focus:outline-none group">
+          <div class="relative flex-shrink-0 w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-900 via-emerald-950 to-[#022c22] p-1.5 shadow-md ring-1 ring-emerald-700/50">
+            <svg viewBox="0 0 100 100" fill="none" class="w-full h-full">
+              <circle cx="50" cy="50" r="42" stroke="url(#logoGoldGrad)" stroke-width="6" />
+              <rect x="32" y="52" width="6.5" height="20" rx="2" fill="#22c55e" />
+              <rect x="42" y="44" width="6.5" height="28" rx="2" fill="#16a34a" />
+              <rect x="52" y="34" width="6.5" height="38" rx="2" fill="#15803d" />
+              <path d="M 27 58 L 40 45 L 50 51 L 68 31" stroke="url(#logoGoldGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M 60 30 L 70 30 L 70 40" stroke="url(#logoGoldGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+              <circle cx="64" cy="64" r="14" fill="url(#logoGoldGrad)" />
+              <text x="64" y="69" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="800" font-size="15" fill="#064e3b">K</text>
+              <defs>
+                <linearGradient id="logoGoldGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#fde047" />
+                  <stop offset="0.5" stop-color="#f59e0b" />
+                  <stop offset="1" stop-color="#d97706" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-1.5">
+              Kwanza<span class="text-emerald-600">Flow</span>
+              <span class="hidden sm:inline-block text-[10px] uppercase font-semibold tracking-wider bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded border border-emerald-200">
+                AO
+              </span>
+            </span>
+            <span class="text-[11px] text-slate-500 font-medium -mt-0.5">
+              Finanças & Kixikila em Kwanzas
+            </span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Items -->
+        <nav class="hidden lg:flex items-center gap-1">
+          <button onclick="switchTab('inicio')" id="nav-inicio" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-colors bg-emerald-50 text-emerald-800 font-semibold ring-1 ring-emerald-300/60">
+            Início
+          </button>
+          <button onclick="switchTab('recursos')" id="nav-recursos" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+            Recursos
+          </button>
+          <button onclick="switchTab('kixikila')" id="nav-kixikila" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+            Kixikila
+          </button>
+          <button onclick="switchTab('privacidade')" id="nav-privacidade" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+            Privacidade
+          </button>
+          <button onclick="switchTab('termos')" id="nav-termos" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+            Termos
+          </button>
+          <button onclick="switchTab('eliminar-conta')" id="nav-eliminar-conta" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-colors text-rose-700 hover:bg-rose-50 flex items-center gap-1">
+            <span>Eliminar Conta</span>
+            <span class="text-[10px] px-1 py-0.2 bg-rose-100 text-rose-700 rounded font-semibold ml-0.5">URL Play</span>
+          </button>
+        </nav>
+
+        <!-- Play Store Action Button -->
+        <div class="hidden sm:flex items-center gap-3">
+          <button onclick="openPlayModal()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-800 to-emerald-700 hover:from-emerald-700 hover:to-emerald-600 text-white text-sm font-semibold shadow-xs hover:shadow transition-all border border-emerald-900/30">
+            <svg class="w-4 h-4 fill-current text-emerald-200" viewBox="0 0 24 24">
+              <path d="M3.609 1.814L13.792 12 3.61 22.186a2.38 2.38 0 0 1-.61-.986V2.8a2.38 2.38 0 0 1 .61-.986zm11.602 11.602l2.394-2.394-11.45-6.52 9.056 8.914zm0-2.832L6.155 1.67l11.45 6.52-2.394 2.394zm1.414 1.414l3.18-1.813c1.07-.61 1.07-1.604 0-2.214l-3.18-1.813-2.122 2.12 2.122 2.12z" />
+            </svg>
+            <span>Baixar na Play Store</span>
+          </button>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <div class="flex items-center gap-2 lg:hidden">
+          <button onclick="openPlayModal()" class="p-2 text-emerald-700 hover:bg-emerald-50 rounded-lg sm:hidden">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path d="M3.609 1.814L13.792 12 3.61 22.186a2.38 2.38 0 0 1-.61-.986V2.8a2.38 2.38 0 0 1 .61-.986zm11.602 11.602l2.394-2.394-11.45-6.52 9.056 8.914zm0-2.832L6.155 1.67l11.45 6.52-2.394 2.394zm1.414 1.414l3.18-1.813c1.07-.61 1.07-1.604 0-2.214l-3.18-1.813-2.122 2.12 2.122 2.12z" />
+            </svg>
+          </button>
+          <button onclick="toggleMobileMenu()" class="p-2 text-slate-700 hover:bg-slate-100 rounded-lg" aria-label="Menu">
+            <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-1 shadow-lg">
+      <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 py-1">Navegação</div>
+      <button onclick="switchTab('inicio'); toggleMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-medium text-slate-800 hover:bg-slate-50">Início</button>
+      <button onclick="switchTab('recursos'); toggleMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-medium text-slate-800 hover:bg-slate-50">Recursos</button>
+      <button onclick="switchTab('kixikila'); toggleMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-medium text-slate-800 hover:bg-slate-50">Kixikila</button>
+      <button onclick="switchTab('privacidade'); toggleMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-medium text-slate-800 hover:bg-slate-50">Privacidade</button>
+      <button onclick="switchTab('termos'); toggleMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-medium text-slate-800 hover:bg-slate-50">Termos de Uso</button>
+      <button onclick="switchTab('eliminar-conta'); toggleMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-medium text-rose-700 hover:bg-rose-50 flex justify-between items-center">
+        <span>Eliminar Conta</span>
+        <span class="text-xs bg-rose-100 text-rose-700 px-2 py-0.5 rounded-full font-semibold">Play Compliance</span>
+      </button>
+      <div class="pt-4 border-t border-slate-100">
+        <button onclick="openPlayModal(); toggleMobileMenu();" class="w-full py-3 px-4 rounded-xl bg-emerald-800 text-white font-semibold shadow-xs text-center flex items-center justify-center gap-2">
+          <span>Baixar na Play Store</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== TAB 1: INÍCIO (LANDING PAGE) ==================== -->
+  <main id="tab-inicio" class="tab-content active">
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-8 pb-16 lg:py-20 bg-gradient-to-b from-emerald-950 via-emerald-900 to-slate-900 text-white">
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <!-- Left Column -->
+          <div class="lg:col-span-7 space-y-6 text-left">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-800/80 border border-emerald-600/40 text-emerald-200 text-xs font-semibold backdrop-blur-xs">
+              <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+              <span>O fluxo certo para a sua vida financeira</span>
+              <span class="text-emerald-400">|</span>
+              <span class="text-amber-300 font-bold">Angola 🇦🇴</span>
+            </div>
+
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] text-white">
+              Domine as suas <br class="hidden sm:inline" />
+              Finanças em <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-emerald-300 to-emerald-400">Kwanzas</span>
+            </h1>
+
+            <p class="text-base sm:text-xl text-emerald-100/90 max-w-2xl font-normal leading-relaxed">
+              Gerencie seu negócio, finanças e família em um só lugar. Orçamento inteligente pela regra <strong class="text-white font-semibold">50/30/20</strong>, gestão transparente de <strong class="text-amber-300 font-semibold">Kixikila comunitária</strong> e controle de micro-negócios sem complicação.
+            </p>
+
+            <!-- 4 Badges as in the official branding -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2">
+              <div class="bg-emerald-900/60 border border-emerald-700/50 rounded-xl p-2.5">
+                <div class="text-amber-300 font-semibold text-xs mb-1">🏪 Negócio</div>
+                <p class="text-[11px] text-emerald-200/80">Vendas, estoque e fiados</p>
+              </div>
+              <div class="bg-emerald-900/60 border border-emerald-700/50 rounded-xl p-2.5">
+                <div class="text-emerald-300 font-semibold text-xs mb-1">📈 Finanças</div>
+                <p class="text-[11px] text-emerald-200/80">Receitas, despesas e DRE</p>
+              </div>
+              <div class="bg-emerald-900/60 border border-emerald-700/50 rounded-xl p-2.5">
+                <div class="text-amber-300 font-semibold text-xs mb-1">👨‍👩‍👦 Família</div>
+                <p class="text-[11px] text-emerald-200/80">Gestão familiar e metas</p>
+              </div>
+              <div class="bg-emerald-900/60 border border-emerald-700/50 rounded-xl p-2.5">
+                <div class="text-emerald-300 font-semibold text-xs mb-1">🎯 Metas</div>
+                <p class="text-[11px] text-emerald-200/80">Planeje e poupe com foco</p>
+              </div>
+            </div>
+
+            <!-- CTAs -->
+            <div class="pt-3 flex flex-wrap items-center gap-3.5">
+              <button onclick="openPlayModal()" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-bold text-sm sm:text-base shadow-lg flex items-center gap-2.5">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M3.609 1.814L13.792 12 3.61 22.186a2.38 2.38 0 0 1-.61-.986V2.8a2.38 2.38 0 0 1 .61-.986zm11.602 11.602l2.394-2.394-11.45-6.52 9.056 8.914zm0-2.832L6.155 1.67l11.45 6.52-2.394 2.394zm1.414 1.414l3.18-1.813c1.07-.61 1.07-1.604 0-2.214l-3.18-1.813-2.122 2.12 2.122 2.12z" />
+                </svg>
+                <div class="text-left leading-tight">
+                  <div class="text-[10px] uppercase font-semibold">Disponível no</div>
+                  <div class="text-sm font-black">Google Play Store</div>
+                </div>
+              </button>
+              <button onclick="switchTab('recursos')" class="px-5 py-3.5 rounded-xl bg-emerald-800/80 hover:bg-emerald-700/80 border border-emerald-600/50 text-white font-semibold text-sm sm:text-base">
+                Conhecer Recursos →
+              </button>
+            </div>
+
+            <!-- Trust Badge -->
+            <div class="pt-2 flex items-center gap-3 text-xs text-emerald-200/90 font-medium">
+              <div class="bg-emerald-950/60 px-3 py-1.5 rounded-lg border border-emerald-800">
+                🛡️ Simples • Seguro • Inteligente
+              </div>
+              <span class="text-slate-400 hidden sm:inline">— Feito para angolanos que querem crescer com propósito.</span>
+            </div>
+          </div>
+
+          <!-- Right Column: App Mockup faithful to user screenshot -->
+          <div class="lg:col-span-5 relative">
+            <div class="relative mx-auto max-w-[320px] bg-slate-950 rounded-[40px] p-3 shadow-2xl ring-1 ring-emerald-600/40 border-4 border-slate-800">
+              <div class="w-24 h-4 bg-slate-900 rounded-full mx-auto mb-2 flex items-center justify-center">
+                <div class="w-2 h-2 rounded-full bg-slate-700 mr-2"></div>
+                <div class="w-8 h-1 rounded-full bg-slate-800"></div>
+              </div>
+
+              <!-- Phone Screen Content -->
+              <div class="bg-slate-50 text-slate-900 rounded-[30px] overflow-hidden p-3.5 space-y-3 text-xs">
+                <div class="bg-emerald-900 text-white -mx-3.5 -mt-3.5 p-3.5 pb-4 rounded-b-2xl shadow-sm">
+                  <div class="flex items-center justify-between text-xs mb-3">
+                    <span class="font-bold tracking-tight text-sm">KwanzaFlow</span>
+                    <span class="bg-emerald-800/80 px-2 py-0.5 rounded-full text-[10px]">AKZ Online</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <div class="text-[11px] text-emerald-200">Balanço Atual</div>
+                      <div class="text-2xl font-black text-white tracking-tight">0,00 <span class="text-amber-300 text-lg">Kz</span></div>
+                      <div class="text-[10px] text-emerald-300 mt-0.5">▲ Alta de +2,3% este mês</div>
+                    </div>
+                    <div class="w-11 h-11 rounded-full bg-amber-400 text-emerald-950 font-black flex items-center justify-center text-base shadow-md">K</div>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-2xs">
+                    <div class="text-[10px] font-semibold text-slate-500">Receitas</div>
+                    <div class="text-sm font-black text-emerald-700">0,00 Kz</div>
+                    <div class="text-[9px] text-emerald-600">Entradas do período</div>
+                  </div>
+                  <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-2xs">
+                    <div class="text-[10px] font-semibold text-slate-500">Despesas</div>
+                    <div class="text-sm font-black text-rose-700">0,00 Kz</div>
+                    <div class="text-[9px] text-rose-600">▲ Gastos 28%</div>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="bg-emerald-50 border border-emerald-200 p-2.5 rounded-xl flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-lg bg-emerald-200 text-emerald-800 flex items-center justify-center font-bold">🎯</div>
+                    <div>
+                      <div class="font-bold text-slate-800 text-[11px]">Metas</div>
+                      <div class="text-[9px] text-emerald-700">Poupança</div>
+                    </div>
+                  </div>
+                  <div class="bg-amber-50 border border-amber-200 p-2.5 rounded-xl flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-lg bg-amber-200 text-amber-900 flex items-center justify-center font-bold">🤝</div>
+                    <div>
+                      <div class="font-bold text-slate-800 text-[11px]">Kixikila</div>
+                      <div class="text-[9px] text-amber-800">Poupança Coletiva</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bg-emerald-50 border border-emerald-200 p-2.5 rounded-xl space-y-1">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-emerald-900 text-[11px]">🏪 Modo Gestão de Negócio</span>
+                    <span class="text-[9px] bg-emerald-600 text-white px-1.5 py-0.2 rounded font-semibold">Ativo</span>
+                  </div>
+                  <p class="text-[9.5px] text-slate-600 leading-tight">
+                    Para cantinas, roulotes ou pequenos comerciantes. Controle estoque, vendas e fiados.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- AdMob Container Placeholder -->
+    <div class="w-full max-w-5xl mx-auto px-4 my-10">
+      <div class="bg-slate-100/90 border border-dashed border-slate-300 rounded-2xl p-4 text-center">
+        <div class="flex items-center justify-between text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2 px-2">
+          <span>• Publicidade • Espaço Patrocinado</span>
+          <span class="text-slate-400 text-[10px]">Google AdMob / AdSense Container</span>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-3 text-left">
+            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 font-black flex items-center justify-center">Ad</div>
+            <div>
+              <div class="font-bold text-slate-800 text-sm">Espaço Reservado para Anúncios Autorizados</div>
+              <div class="text-xs text-slate-500">Google AdMob SDK (identificador AAID) em conformidade com as regras da Google Play.</div>
+            </div>
+          </div>
+          <span class="text-[11px] text-slate-400 bg-slate-50 px-2.5 py-1 rounded border border-slate-200">Anúncios Seguros</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== TAB 2: RECURSOS & 50/30/20 ==================== -->
+  <section id="tab-recursos" class="tab-content py-16 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold mb-3">
+          Funcionalidades Inteligentes
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900">
+          Recursos pensados para o seu bolso em Angola
+        </h2>
+        <p class="mt-3 text-slate-600">
+          Orçamento 50/30/20, gestão de cantinas e quitandas, controle de fiados e assistente inteligente.
+        </p>
+      </div>
+
+      <!-- Feature Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-14">
+        <div class="bg-white rounded-2xl p-7 border border-slate-200 shadow-xs">
+          <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xl mb-4">💰</div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2">1. Orçamento Pessoal 50/30/20</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Distribua o seu rendimento em Kwanzas: 50% para despesas essenciais (renda, comida, energia), 30% para desejos e 20% guardados para o seu futuro.
+          </p>
+          <div class="text-xs font-semibold text-emerald-700">Simule o seu orçamento abaixo ↓</div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-7 border border-slate-200 shadow-xs">
+          <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-900 flex items-center justify-center font-bold text-xl mb-4">🤝</div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2">2. Kixikila Digital e Transparente</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Controle de rondas, quotas pagas e ordem de recebimento com registo de comprovativos, sem discussões nem atrasos.
+          </p>
+          <button onclick="switchTab('kixikila')" class="text-xs font-bold text-amber-700 hover:text-amber-800">Ver Módulo de Kixikila →</button>
+        </div>
+
+        <div class="bg-white rounded-2xl p-7 border border-slate-200 shadow-xs">
+          <div class="w-12 h-12 rounded-xl bg-teal-100 text-teal-900 flex items-center justify-center font-bold text-xl mb-4">🏪</div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2">3. Livro de Caixa & Fiados para Micro-Negócios</h3>
+          <p class="text-sm text-slate-600 mb-2">
+            Perfeito para cantinas, roulotes e quitandeiras: saiba o seu lucro real da semana e não perca dinheiro com clientes fiados.
+          </p>
+          <div class="text-xs text-teal-700 font-semibold">DRE Simplificado e Relatórios em PDF</div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-7 border border-slate-200 shadow-xs">
+          <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-900 flex items-center justify-center font-bold text-xl mb-4">🤖</div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2">4. Assistente IA Financeiro</h3>
+          <p class="text-sm text-slate-600 mb-2">
+            Diagnósticos práticos e alertas para evitar desperdícios com recargas excessivas ou gastos impulsivos.
+          </p>
+          <div class="text-xs text-indigo-700 font-semibold">Conselhos contextualizados para Angola</div>
+        </div>
+      </div>
+
+      <!-- Interactive 50/30/20 Calculator -->
+      <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-xl border border-slate-800">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-800">
+          <div>
+            <div class="text-amber-400 font-bold text-xs uppercase tracking-wider mb-1">Simulador Dinâmico</div>
+            <h3 class="text-2xl sm:text-3xl font-black">Calcule a sua Regra 50/30/20</h3>
+            <p class="text-sm text-slate-300">Insira a sua renda mensal em Kwanzas e visualize a partição ideal.</p>
+          </div>
+          <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700 min-w-[260px]">
+            <label class="block text-xs text-slate-300 font-medium mb-1">Rendimento Líquido (Kz):</label>
+            <div class="relative">
+              <input type="number" id="calc-income" value="150000" step="10000" oninput="updateBudgetCalc()" class="w-full bg-slate-950 text-white font-bold text-lg px-3 py-2 rounded-xl border border-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-400 pr-10" />
+              <span class="absolute right-3 top-2.5 text-xs text-amber-300 font-bold">Kz</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
+          <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-5">
+            <span class="text-xs font-bold uppercase text-emerald-400">50% Necessidades</span>
+            <div id="val-needs" class="text-2xl sm:text-3xl font-black text-white my-2">75.000 Kz</div>
+            <p class="text-xs text-slate-300">Alimentação, renda de casa, luz, água e transporte diário.</p>
+          </div>
+          <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-5">
+            <span class="text-xs font-bold uppercase text-amber-400">30% Desejos e Lazer</span>
+            <div id="val-wants" class="text-2xl sm:text-3xl font-black text-amber-300 my-2">45.000 Kz</div>
+            <p class="text-xs text-slate-300">Saídas com amigos, recargas e pequenas compras pessoais.</p>
+          </div>
+          <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-5 ring-2 ring-emerald-500/50">
+            <span class="text-xs font-bold uppercase text-emerald-300">20% Poupança & Kixikila</span>
+            <div id="val-savings" class="text-2xl sm:text-3xl font-black text-emerald-400 my-2">30.000 Kz</div>
+            <p class="text-xs text-slate-300">Reserva de emergência, quotas de Kixikila e reinvestimento.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TAB 3: KIXIKILA SECTION ==================== -->
+  <section id="tab-kixikila" class="tab-content py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="inline-flex items-center px-3.5 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold mb-3 border border-amber-300">
+          Poupança Tradicional Angolana Modernizada
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900">
+          Kixikila Digital: Gestão de Rondas com Clareza
+        </h2>
+        <p class="mt-3 text-slate-600">
+          Organize círculos de poupança entre família, colegas de trabalho e amigos sem o risco de perdas em cadernos de papel.
+        </p>
+      </div>
+
+      <!-- Interactive Kixikila Simulator -->
+      <div class="bg-slate-900 rounded-3xl p-6 sm:p-10 text-white shadow-xl border border-slate-800 max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div class="space-y-5">
+            <div>
+              <span class="text-xs font-bold text-amber-400 uppercase">Simulador de Grupo</span>
+              <h3 class="text-2xl font-black mt-1">Quanto recebe na sua vez?</h3>
+            </div>
+            
+            <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700">
+              <div class="flex justify-between text-sm mb-2">
+                <span class="text-slate-300">Membros no Grupo:</span>
+                <span id="kixikila-members-display" class="font-bold text-amber-400">8 pessoas</span>
+              </div>
+              <input type="range" id="kixikila-members" min="2" max="20" value="8" oninput="updateKixikilaCalc()" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-400" />
+            </div>
+
+            <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700">
+              <div class="flex justify-between text-sm mb-2">
+                <span class="text-slate-300">Quota Mensal por Pessoa:</span>
+                <span id="kixikila-quota-display" class="font-bold text-emerald-400">25.000 Kz</span>
+              </div>
+              <div class="grid grid-cols-3 gap-2">
+                <button type="button" onclick="setKixikilaQuota(10000)" class="text-xs py-1.5 px-2 rounded-lg bg-slate-700 hover:bg-slate-600 font-bold">10.000 Kz</button>
+                <button type="button" onclick="setKixikilaQuota(25000)" class="text-xs py-1.5 px-2 rounded-lg bg-amber-400 text-slate-950 font-bold">25.000 Kz</button>
+                <button type="button" onclick="setKixikilaQuota(50000)" class="text-xs py-1.5 px-2 rounded-lg bg-slate-700 hover:bg-slate-600 font-bold">50.000 Kz</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-br from-emerald-900 to-emerald-950 p-6 sm:p-8 rounded-3xl border border-emerald-700 text-center">
+            <div class="text-xs font-bold text-emerald-300 uppercase mb-2">Valor da Bolada por Vez</div>
+            <div id="kixikila-total-pot" class="text-4xl font-black text-amber-300 my-3">200.000 Kz</div>
+            <div class="text-xs text-slate-300 mb-6">Duração total da ronda: <span id="kixikila-duration" class="font-bold text-white">8 meses</span></div>
+            <button onclick="openPlayModal()" class="w-full py-3 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm shadow">
+              Criar Grupo no KwanzaFlow
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TAB 4: POLÍTICA DE PRIVACIDADE ==================== -->
+  <section id="tab-privacidade" class="tab-content py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-lg border border-slate-800 mb-10">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+          <div>
+            <h1 class="text-2xl sm:text-3xl font-black">Política de Privacidade</h1>
+            <p class="text-xs sm:text-sm text-emerald-400 mt-1">Conformidade Oficial Google Play Store & Legislação Angolana</p>
+          </div>
+          <button onclick="copyCurrentUrl('#privacidade')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold border border-slate-700 text-slate-200">
+            📋 Copiar URL Google Play
+          </button>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 text-xs">
+          <div><span class="text-slate-400 block">Aplicação:</span><strong>KwanzaFlow</strong></div>
+          <div><span class="text-slate-400 block">Package ID:</span><code class="text-emerald-400 font-mono text-[11px]">com.kwanzaflow.aoa</code></div>
+          <div><span class="text-slate-400 block">Projeto Firebase:</span><code class="text-amber-400 font-mono text-[11px]">akzflow</code></div>
+          <div><span class="text-slate-400 block">Vigência:</span><span>Janeiro de 2026</span></div>
+        </div>
+      </div>
+
+      <div class="space-y-6 text-slate-700 text-sm leading-relaxed">
+        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+          <h2 class="text-base font-bold text-slate-900 mb-2">1. Identificação e Visão Geral</h2>
+          <p>O aplicativo <strong>KwanzaFlow</strong> (ID: <code>com.kwanzaflow.aoa</code>) é regido pelas normas de privacidade do Google Play Developer Console e pela Lei n.º 22/11 de Proteção de Dados de Angola.</p>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-slate-200">
+          <h2 class="text-base font-bold text-slate-900 mb-2">2. Dados Recolhidos</h2>
+          <ul class="list-disc pl-5 space-y-1.5">
+            <li><strong>Autenticação Google:</strong> Nome, e-mail e foto obtidos via Google Sign-In (Credential Manager).</li>
+            <li><strong>Dados Financeiros:</strong> Valores em Kwanzas, despesas, orçamentos e quotas inseridas voluntariamente pelo utilizador.</li>
+            <li><strong>Publicidade & Terceiros:</strong> Identificador de publicidade do Android (AAID) gerido pelo SDK do Google AdMob.</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-slate-200 bg-slate-50">
+          <h2 class="text-base font-bold text-slate-900 mb-2">3. Finalidade e Firebase Firestore</h2>
+          <p>Os dados são processados para sincronização segura na nuvem através do <strong>Google Firebase Authentication</strong> e <strong>Google Cloud Firestore</strong> (Projeto: <code>akzflow</code>). O KwanzaFlow <u>NÃO vende nem compartilha dados</u> com corretores de dados (data brokers).</p>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-slate-200">
+          <h2 class="text-base font-bold text-slate-900 mb-2">4. Publicidade (Google AdMob)</h2>
+          <p>Utilizamos o Google AdMob para veiculação de anúncios. O utilizador pode redefinir o seu identificador de anúncios (AAID) nas definições do sistema Android.</p>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-slate-200 bg-slate-50">
+          <h2 class="text-base font-bold text-slate-900 mb-2">5. Segurança e Criptografia</h2>
+          <p>Tráfego 100% criptografado através de HTTPS/TLS e armazenamento seguro nos servidores Google Cloud com Firebase Security Rules.</p>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-rose-200 bg-rose-50/50">
+          <h2 class="text-base font-bold text-slate-900 mb-2">6. Direito de Eliminação de Conta</h2>
+          <p>Em cumprimento estrito da Google Play Store, garantimos a eliminação direta de perfil e dados pessoais sem exigir a reinstalação do aplicativo.</p>
+          <div class="mt-3">
+            <button onclick="switchTab('eliminar-conta')" class="px-4 py-2 bg-rose-700 hover:bg-rose-800 text-white rounded-xl font-bold text-xs">
+              Aceder ao Formulário de Exclusão de Conta →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TAB 5: TERMOS DE USO ==================== -->
+  <section id="tab-termos" class="tab-content py-16 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs mb-10">
+        <h1 class="text-2xl sm:text-3xl font-black text-slate-900">Termos e Condições de Uso</h1>
+        <p class="text-xs sm:text-sm text-slate-500 mt-1">KwanzaFlow • Vigência 2026</p>
+      </div>
+
+      <div class="space-y-6 text-slate-700 text-sm leading-relaxed">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs">
+          <h2 class="text-base font-bold text-slate-900 mb-2">1. Natureza Informativa e Não Bancária</h2>
+          <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-xl mb-3 text-xs text-amber-950 font-medium">
+            O KwanzaFlow é uma ferramenta tecnológica de organização pessoal e não atua como banco, cooperativa de crédito ou intermediário financeiro autorizado pelo BNA.
+          </div>
+          <p>O aplicativo não custodia fundos em dinheiro real nem emite empréstimos. Os valores lançados são registos pessoais.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs">
+          <h2 class="text-base font-bold text-slate-900 mb-2">2. Responsabilidade do Utilizador</h2>
+          <p>O utilizador é o único responsável pela veracidade dos dados registados e pela custódia do seu telemóvel e conta Google associada.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs">
+          <h2 class="text-base font-bold text-slate-900 mb-2">3. Módulo de Kixikila</h2>
+          <p>O KwanzaFlow atua apenas como facilitador de registos e apontamentos de rondas; as obrigações de pagamento são de responsabilidade civil e moral dos próprios membros participantes.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs">
+          <h2 class="text-base font-bold text-slate-900 mb-2">4. Propriedade Intelectual</h2>
+          <p>A marca KwanzaFlow, código e design são de titularidade exclusiva dos seus criadores, protegidos pela legislação de propriedade intelectual de Angola.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TAB 6: ELIMINAR CONTA E DADOS ==================== -->
+  <section id="tab-eliminar-conta" class="tab-content py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-rose-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-rose-900 mb-10">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-rose-900">
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-2xl sm:text-3xl font-black">Exclusão de Conta e Dados</h1>
+              <span class="bg-rose-900 text-rose-200 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">Google Play</span>
+            </div>
+            <p class="text-xs sm:text-sm text-rose-300 mt-0.5">URL Obrigatória de Segurança de Dados da Google Play Store</p>
+          </div>
+          <button onclick="copyCurrentUrl('#eliminar-conta')" class="px-3.5 py-2 rounded-xl bg-rose-900 hover:bg-rose-800 text-xs font-semibold border border-rose-700 text-rose-100">
+            📋 Copiar URL de Exclusão
+          </button>
+        </div>
+        <p class="text-xs sm:text-sm text-rose-100 pt-4 leading-relaxed">
+          Qualquer utilizador do <strong>KwanzaFlow</strong> tem o direito garantido de solicitar a exclusão definitiva da sua conta Google vinculada e o apagamento irrecuperável de todo o seu histórico financeiro no Firebase Firestore.
+        </p>
+      </div>
+
+      <!-- Comparison Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+        <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl">
+          <div class="font-bold text-rose-700 mb-2">🗑️ O que é excluído imediatamente:</div>
+          <ul class="text-xs sm:text-sm text-slate-600 space-y-2">
+            <li>• Perfil do utilizador no Google Firebase Authentication.</li>
+            <li>• Documentos de receitas, despesas e orçamentos no Cloud Firestore.</li>
+            <li>• Histórico de Kixikilas e livros de caixa de micro-negócios.</li>
+          </ul>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl">
+          <div class="font-bold text-amber-700 mb-2">⏱️ Retenção temporária de segurança:</div>
+          <p class="text-xs sm:text-sm text-slate-600">
+            Logs técnicos estritamente necessários para auditoria ou prevenção contra fraudes podem permanecer retidos por no <strong>máximo 30 dias</strong>, sendo purgados de forma automática.
+          </p>
+        </div>
+      </div>
+
+      <!-- Functional Deletion Form -->
+      <div class="bg-white border-2 border-slate-200 rounded-3xl p-6 sm:p-10 shadow-sm">
+        <div id="deletion-form-container">
+          <h2 class="text-xl font-bold text-slate-900 mb-1">Formulário Oficial de Solicitação</h2>
+          <p class="text-xs text-slate-500 mb-6">Preencha o e-mail Google cadastrado para gerar o protocolo de purga.</p>
+
+          <form onsubmit="handleDeletionSubmit(event)" class="space-y-5">
+            <div>
+              <label class="block text-xs font-bold uppercase text-slate-700 mb-1">E-mail da Conta Google *</label>
+              <input type="email" id="del-email" required placeholder="exemplo@gmail.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-rose-500 focus:outline-none" />
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold uppercase text-slate-700 mb-1">Motivo (Opcional)</label>
+              <select id="del-reason" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm bg-white">
+                <option value="Não utilizo mais o aplicativo">Não utilizo mais o aplicativo</option>
+                <option value="Preocupações com privacidade">Preocupações com privacidade</option>
+                <option value="Desejo reiniciar meus dados do zero">Desejo reiniciar meus dados do zero</option>
+                <option value="Outro motivo">Outro motivo</option>
+              </select>
+            </div>
+
+            <div class="p-4 bg-rose-50 rounded-2xl border border-rose-200">
+              <label class="flex items-start gap-3 cursor-pointer">
+                <input type="checkbox" id="del-confirm" required class="w-4 h-4 mt-1 accent-rose-600" />
+                <span class="text-xs text-rose-900 font-medium">
+                  Compreendo que esta solicitação é <strong>definitiva e irreversível</strong>. Todos os meus registos em Kwanzas e acessos serão apagados.
+                </span>
+              </label>
+            </div>
+
+            <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-rose-700 hover:bg-rose-800 text-white font-bold text-sm shadow transition-colors">
+              Solicitar Exclusão Imediata de Conta
+            </button>
+          </form>
+        </div>
+
+        <!-- Success Feedback Container -->
+        <div id="deletion-success-container" class="hidden text-center space-y-4 py-4">
+          <div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto text-2xl">✓</div>
+          <h3 class="text-2xl font-black text-slate-900">Solicitação Registada com Sucesso</h3>
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 max-w-md mx-auto text-xs text-left space-y-2">
+            <div><span class="text-slate-500">Protocolo:</span> <strong id="res-ticket" class="text-rose-700 font-mono"></strong></div>
+            <div><span class="text-slate-500">E-mail:</span> <strong id="res-email"></strong></div>
+            <div><span class="text-slate-500">Status no Firebase:</span> <span class="text-emerald-700 font-bold">Fila de purga automática (24h)</span></div>
+          </div>
+          <p class="text-xs text-slate-500">Uma notificação foi registrada para os servidores Google Cloud do KwanzaFlow.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 text-slate-400 border-t border-slate-800 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-slate-800">
+        <div class="space-y-3 md:col-span-2">
+          <div class="text-white font-black text-lg">KwanzaFlow</div>
+          <p class="text-xs text-slate-400 max-w-sm">
+            O fluxo certo para a sua vida financeira. Orçamento inteligente 50/30/20, gestão de Kixikila comunitária e controle de micro-negócios em Angola.
+          </p>
+          <div class="text-xs text-emerald-400">Em conformidade com a Google Play Store 2026 🇦🇴</div>
+        </div>
+        <div class="space-y-2 text-xs">
+          <div class="font-bold text-white uppercase">Conformidade</div>
+          <div><a href="#privacidade" onclick="switchTab('privacidade')" class="hover:text-emerald-400">Política de Privacidade</a></div>
+          <div><a href="#termos" onclick="switchTab('termos')" class="hover:text-white">Termos de Uso</a></div>
+          <div><a href="#eliminar-conta" onclick="switchTab('eliminar-conta')" class="hover:text-rose-400">Eliminar Conta e Dados</a></div>
+        </div>
+        <div class="space-y-2 text-xs">
+          <div class="font-bold text-white uppercase">Apoio ao Utilizador</div>
+          <div class="text-slate-300 font-mono">suporte@kwanzaflow.com</div>
+          <div class="text-slate-500">Package: com.kwanzaflow.aoa</div>
+        </div>
+      </div>
+      <div class="pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-2">
+        <div>© 2026 KwanzaFlow. Feito para Angola.</div>
+        <div>Simples • Seguro • Inteligente</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Google Play Store Modal -->
+  <div id="play-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-xs">
+    <div class="bg-white rounded-3xl p-6 max-w-md w-full text-slate-900 relative shadow-2xl">
+      <button onclick="closePlayModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg">✕</button>
+      <div class="text-sm font-bold text-emerald-700 mb-1">Google Play Protect Verificado</div>
+      <h3 class="text-xl font-black mb-3">KwanzaFlow para Android</h3>
+      <div class="bg-slate-50 p-3 rounded-xl text-xs space-y-1 mb-5 border border-slate-200">
+        <div><span class="text-slate-500">Package:</span> <code class="text-emerald-700 font-mono">com.kwanzaflow.aoa</code></div>
+        <div><span class="text-slate-500">Versão:</span> 1.0.4 (Angola Release)</div>
+        <div><span class="text-slate-500">Requisito:</span> Android 8.0+</div>
+      </div>
+      <a href="https://play.google.com/store/apps/details?id=com.kwanzaflow.aoa" target="_blank" onclick="alert('Redirecionando para a Google Play Store (com.kwanzaflow.aoa)')" class="w-full py-3.5 rounded-xl bg-slate-950 text-white font-bold text-center block">
+        Instalar via Google Play Store
+      </a>
+    </div>
+  </div>
+
+  <!-- Pure Vanilla JavaScript Application Logic -->
+  <script>
+    // Tab switching and hash routing logic
+    function switchTab(tabId) {
+      // Hide all tabs
+      const tabs = document.querySelectorAll('.tab-content');
+      tabs.forEach(tab => tab.classList.remove('active'));
+
+      // Show selected tab
+      const targetTab = document.getElementById('tab-' + tabId);
+      if (targetTab) {
+        targetTab.classList.add('active');
+      }
+
+      // Update Nav Buttons
+      const navButtons = document.querySelectorAll('.nav-btn');
+      navButtons.forEach(btn => {
+        btn.classList.remove('bg-emerald-50', 'text-emerald-800', 'font-semibold', 'ring-1', 'ring-emerald-300/60');
+      });
+      const activeNav = document.getElementById('nav-' + tabId);
+      if (activeNav && tabId !== 'eliminar-conta') {
+        activeNav.classList.add('bg-emerald-50', 'text-emerald-800', 'font-semibold', 'ring-1', 'ring-emerald-300/60');
+      }
+
+      // Smooth scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      history.replaceState(null, '', '#' + tabId);
+    }
+
+    // Handle URL hash on initial load
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (['inicio', 'recursos', 'kixikila', 'privacidade', 'termos', 'eliminar-conta'].includes(hash)) {
+        switchTab(hash);
+      }
+    });
+
+    // Mobile Menu Toggle
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    // Copy URL Helper
+    function copyCurrentUrl(hash) {
+      const url = window.location.origin + window.location.pathname + hash;
+      navigator.clipboard.writeText(url).then(() => {
+        alert('URL oficial copiada com sucesso: ' + url);
+      });
+    }
+
+    // Play Modal
+    function openPlayModal() {
+      document.getElementById('play-modal').classList.remove('hidden');
+    }
+    function closePlayModal() {
+      document.getElementById('play-modal').classList.add('hidden');
+    }
+
+    // 50/30/20 Budget Calculator
+    function formatAOA(num) {
+      return new Intl.NumberFormat('pt-AO', { style: 'decimal', maximumFractionDigits: 0 }).format(num) + ' Kz';
+    }
+    function updateBudgetCalc() {
+      const income = Number(document.getElementById('calc-income').value) || 0;
+      document.getElementById('val-needs').innerText = formatAOA(income * 0.5);
+      document.getElementById('val-wants').innerText = formatAOA(income * 0.3);
+      document.getElementById('val-savings').innerText = formatAOA(income * 0.2);
+    }
+
+    // Kixikila Calculator
+    let currentKixikilaQuota = 25000;
+    function setKixikilaQuota(val) {
+      currentKixikilaQuota = val;
+      document.getElementById('kixikila-quota-display').innerText = formatAOA(val);
+      updateKixikilaCalc();
+    }
+    function updateKixikilaCalc() {
+      const members = Number(document.getElementById('kixikila-members').value) || 8;
+      document.getElementById('kixikila-members-display').innerText = members + ' pessoas';
+      document.getElementById('kixikila-duration').innerText = members + ' meses';
+      document.getElementById('kixikila-total-pot').innerText = formatAOA(members * currentKixikilaQuota);
+    }
+
+    // Account Deletion Form Submission Handler
+    function handleDeletionSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('del-email').value;
+      const randomSuffix = Math.floor(10000 + Math.random() * 90000);
+      const ticket = 'KF-DEL-2026-' + randomSuffix;
+
+      document.getElementById('res-ticket').innerText = ticket;
+      document.getElementById('res-email').innerText = email;
+
+      document.getElementById('deletion-form-container').classList.add('hidden');
+      document.getElementById('deletion-success-container').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "KwanzaFlow",
+  "description": "Aplicativo de finanças pessoais, Kixikila comunitária e gestão de micro-negócios em Angola. Inclui central de conformidade Google Play, Política de Privacidade e Exclusão de Dados.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
