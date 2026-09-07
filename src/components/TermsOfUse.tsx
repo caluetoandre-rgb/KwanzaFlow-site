@@ -99,7 +99,7 @@ export function TermsOfUse({ setActiveTab }: TermsOfUseProps) {
               Reservamo-nos o direito de atualizar periodicamente estes Termos para refletir melhorias no serviço ou novas exigências regulatórias. Notificaremos os utilizadores através do aplicativo sobre alterações materiais.
             </p>
             <p className="mt-2 text-sm text-[#64748b]">
-              Estes termos são regidos pelas leis da República de Angola. Quaisquer dúvidas relativas a estes Termos devem ser remetidas ao canal oficial de suporte: <strong className="text-[#10b981]">suporte@kwanzaflow.com</strong>.
+              Estes termos são regidos pelas leis da República de Angola. Quaisquer dúvidas relativas a estes Termos devem ser remetidas ao canal oficial de suporte: <strong className="text-[#10b981]">appkwanzaflow@gmail.com</strong>.
             </p>
           </div>
         </div>

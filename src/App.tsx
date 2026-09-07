@@ -3,21 +3,16 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Features } from './components/Features';
 import { KixikilaSection } from './components/KixikilaSection';
-import { AdMobContainer } from './components/AdMobContainer';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { TermsOfUse } from './components/TermsOfUse';
 import { AccountDeletion } from './components/AccountDeletion';
 import { Footer } from './components/Footer';
 import { DownloadModal } from './components/DownloadModal';
-import { CodeModal } from './components/CodeModal';
 import { ActiveTab } from './types';
-import { ShieldCheck, UserX } from 'lucide-react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('inicio');
   const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
-  const [isCodeModalOpen, setIsCodeModalOpen] = useState(false);
-  const [rawFileHtml, setRawFileHtml] = useState<string>('');
 
   // Synchronize with URL hash on load and hashchange
   useEffect(() => {
@@ -30,14 +25,6 @@ export default function App() {
 
     handleHash();
     window.addEventListener('hashchange', handleHash);
-
-    // Fetch the real content of public/index.html to display in the modal
-    fetch('/index.html')
-      .then((res) => res.text())
-      .then((text) => setRawFileHtml(text))
-      .catch(() => {
-        setRawFileHtml('Código disponível no arquivo public/index.html da raiz do projeto.');
-      });
 
     return () => window.removeEventListener('hashchange', handleHash);
   }, []);
@@ -65,9 +52,6 @@ export default function App() {
               onOpenDownloadModal={() => setIsDownloadModalOpen(true)}
               setActiveTab={handleTabChange}
             />
-            {/* Standardized Google AdMob Ad Container */}
-            <AdMobContainer />
-
             {/* Quick Teaser for Features & Kixikila */}
             <Features setActiveTab={handleTabChange} />
             <KixikilaSection
@@ -86,7 +70,6 @@ export default function App() {
               </div>
             </div>
             <Features setActiveTab={handleTabChange} />
-            <AdMobContainer />
           </div>
         )}
 
@@ -102,21 +85,18 @@ export default function App() {
               onOpenDownloadModal={() => setIsDownloadModalOpen(true)}
               setActiveTab={handleTabChange}
             />
-            <AdMobContainer />
           </div>
         )}
 
         {activeTab === 'privacidade' && (
           <div className="animate-in fade-in duration-200">
             <PrivacyPolicy setActiveTab={handleTabChange} />
-            <AdMobContainer />
           </div>
         )}
 
         {activeTab === 'termos' && (
           <div className="animate-in fade-in duration-200">
             <TermsOfUse setActiveTab={handleTabChange} />
-            <AdMobContainer />
           </div>
         )}
 
@@ -130,32 +110,13 @@ export default function App() {
       {/* Footer */}
       <Footer
         setActiveTab={handleTabChange}
-        onOpenCodeModal={() => setIsCodeModalOpen(true)}
         onOpenDownloadModal={() => setIsDownloadModalOpen(true)}
       />
 
-      {/* Floating Action Badge for quick Google Play reviewers testing */}
-      <div className="fixed bottom-4 right-4 z-40 flex flex-col gap-2">
-        <button
-          onClick={() => handleTabChange('eliminar-conta')}
-          className="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold py-2.5 px-4 rounded-[8px] shadow-lg flex items-center gap-1.5 transition-all border border-rose-500 cursor-pointer"
-          title="Atalho para URL Obrigatória da Google Play: Exclusão de Conta"
-        >
-          <UserX className="w-3.5 h-3.5" />
-          <span>Excluir Conta (Play URL)</span>
-        </button>
-      </div>
-
-      {/* Modals */}
+      {/* Download Modal */}
       <DownloadModal
         isOpen={isDownloadModalOpen}
         onClose={() => setIsDownloadModalOpen(false)}
-      />
-
-      <CodeModal
-        isOpen={isCodeModalOpen}
-        onClose={() => setIsCodeModalOpen(false)}
-        rawHtml={rawFileHtml}
       />
     </div>
   );

@@ -1,0 +1,25 @@
+{
+  "entities": {
+    "DeletionRequest": {
+      "title": "Deletion Request",
+      "description": "User account and data deletion requests for Google Play compliance",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "reason": { "type": "string" },
+        "notes": { "type": "string" },
+        "date": { "type": "string" },
+        "status": { "type": "string" },
+        "estimatedPurgeDate": { "type": "string" }
+      },
+      "required": ["id", "email", "reason", "date", "status"]
+    }
+  },
+  "firestore": {
+    "/deletionRequests/{requestId}": {
+      "schema": { "$ref": "#/entities/DeletionRequest" },
+      "description": "Requests for account and data deletion submitted by users"
+    }
+  }
+}
