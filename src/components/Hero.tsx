@@ -29,9 +29,9 @@ export function Hero({ onExploreFeatures, onOpenDownloadModal, setActiveTab }: H
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-3xl sm:text-5xl lg:text-[46px] font-black tracking-tight leading-[1.12] text-[#0f172a]">
-              Domine as suas <br className="hidden sm:inline" />
-              Finanças em <span className="text-[#10b981]">Kwanzas</span>
+            <h1 className="text-3xl sm:text-5xl lg:text-[44px] font-black tracking-tight leading-[1.12] text-[#0f172a]">
+              Finanças Pessoais & <br className="hidden sm:inline" />
+              Orçamento Familiar em <span className="text-[#10b981]">Kwanzas</span>
             </h1>
 
             {/* Subtitle */}

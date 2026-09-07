@@ -62,10 +62,6 @@ export function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
             href="https://play.google.com/store/apps/details?id=com.kwanzaflow.aoa"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={(e) => {
-              e.preventDefault();
-              alert("Redirecionando para o Google Play Store: https://play.google.com/store/apps/details?id=com.kwanzaflow.aoa (Pacote: com.kwanzaflow.aoa)");
-            }}
             className="w-full py-4 px-6 rounded-[8px] bg-[#0f172a] hover:bg-slate-800 text-white font-bold flex items-center justify-center gap-3 shadow-lg hover:shadow-slate-900/20 transition-all cursor-pointer border border-slate-800 group"
           >
             {/* Google Play Vector */}

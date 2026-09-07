@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { KwanzaLogo } from './KwanzaLogo';
-import { Mail, Copy, Check, ShieldCheck, FileText, UserX, Heart, ExternalLink, Code2 } from 'lucide-react';
+import { Mail, Copy, Check, ShieldCheck, FileText, UserX } from 'lucide-react';
 import { ActiveTab } from '../types';
 
 interface FooterProps {
   setActiveTab: (tab: ActiveTab) => void;
-  onOpenCodeModal: () => void;
   onOpenDownloadModal: () => void;
 }
 
-export function Footer({ setActiveTab, onOpenCodeModal, onOpenDownloadModal }: FooterProps) {
+export function Footer({ setActiveTab, onOpenDownloadModal }: FooterProps) {
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const supportEmail = 'suporte@kwanzaflow.com';
+  const supportEmail = 'appkwanzaflow@gmail.com';
 
   const copyEmail = () => {
     navigator.clipboard.writeText(supportEmail);
@@ -27,26 +26,16 @@ export function Footer({ setActiveTab, onOpenCodeModal, onOpenDownloadModal }: F
   return (
     <footer className="bg-[#0f172a] text-slate-400 border-t border-slate-800 text-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-slate-800">
           {/* Brand & Mission */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="lg:col-span-1.5 space-y-4">
             <KwanzaLogo />
             <p className="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed">
-              O fluxo certo para a sua vida financeira. Orçamento inteligente 50/30/20, gestão comunitária de Kixikila e controle de micro-negócios angolanos.
+              O fluxo certo para a sua vida financeira. Orçamento inteligente 50/30/20, gestão comunitária de Kixikila e controle de micro-negócios em Angola.
             </p>
             <div className="flex items-center gap-2 text-xs text-[#10b981] font-medium pt-1">
               <span className="w-2 h-2 rounded-full bg-[#10b981]"></span>
-              <span>Em total conformidade com a Google Play Store 2026</span>
-            </div>
-            {/* Direct button to inspect or copy the standalone Firebase Hosting HTML */}
-            <div className="pt-2">
-              <button
-                onClick={onOpenCodeModal}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-[8px] bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-all border border-slate-700 cursor-pointer"
-              >
-                <Code2 className="w-3.5 h-3.5 text-[#10b981]" />
-                <span>Ver Código HTML Autocontido (public/index.html)</span>
-              </button>
+              <span>Portal Oficial: <strong className="text-white">kwanzaflow.online</strong></span>
             </div>
           </div>
 
@@ -79,7 +68,7 @@ export function Footer({ setActiveTab, onOpenCodeModal, onOpenDownloadModal }: F
 
           {/* Legal & Compliance */}
           <div className="space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">Conformidade Google Play</h4>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white">Privacidade e Segurança</h4>
             <ul className="space-y-2 text-xs">
               <li>
                 <button
@@ -108,9 +97,6 @@ export function Footer({ setActiveTab, onOpenCodeModal, onOpenDownloadModal }: F
                   <span>Eliminar Conta e Dados</span>
                 </button>
               </li>
-              <li className="text-[11px] text-slate-500 pt-1 font-mono">
-                Package: com.kwanzaflow.aoa
-              </li>
             </ul>
           </div>
 
@@ -134,7 +120,7 @@ export function Footer({ setActiveTab, onOpenCodeModal, onOpenDownloadModal }: F
               </button>
             </div>
             <div className="text-[11px] text-slate-500">
-              Alternativo: Caluetoandre@gmail.com
+              Atendimento em horário comercial de Luanda.
             </div>
           </div>
         </div>
@@ -142,12 +128,12 @@ export function Footer({ setActiveTab, onOpenCodeModal, onOpenDownloadModal }: F
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <div className="flex items-center gap-2">
-            <span>© 2026 KwanzaFlow. Feito para Angola.</span>
+            <span>© 2026 KwanzaFlow (kwanzaflow.online). Todos os direitos reservados.</span>
             <span>🇦🇴</span>
           </div>
 
           <div className="flex items-center gap-1 text-[11px]">
-            <span>Simples • Seguro • Inteligente — Feito com dedicação para a nossa gente.</span>
+            <span>Simples • Seguro • Feito para Angola.</span>
           </div>
         </div>
       </div>

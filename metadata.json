@@ -1,6 +1,6 @@
 {
-  "name": "KwanzaFlow",
-  "description": "Aplicativo de finanças pessoais, Kixikila comunitária e gestão de micro-negócios em Angola. Inclui central de conformidade Google Play, Política de Privacidade e Exclusão de Dados.",
+  "name": "KwanzaFlow - Finanças Pessoais e Orçamento Familiar",
+  "description": "Aplicativo de finanças pessoais, Kixikila comunitária e gestão de micro-negócios em Angola. Focado em orçamento familiar e planeamento em Kwanzas.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

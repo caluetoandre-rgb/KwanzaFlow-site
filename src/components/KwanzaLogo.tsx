@@ -53,8 +53,8 @@ export function KwanzaLogo({ className = "w-9 h-9", withText = true, subtitle = 
             </span>
           </span>
           {subtitle && (
-            <span className="text-[11px] text-[#64748b] font-medium -mt-0.5">
-              Finanças & Kixikila em Kwanzas
+            <span className="text-[10px] sm:text-[11px] text-[#64748b] font-medium -mt-0.5 truncate max-w-[220px]">
+              Finanças Pessoais e Orçamento Familiar
             </span>
           )}
         </div>

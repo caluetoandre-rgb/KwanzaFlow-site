@@ -16,7 +16,6 @@ export function Navbar({ activeTab, setActiveTab, onOpenDownloadModal }: NavbarP
     { id: 'inicio', label: 'Início' },
     { id: 'recursos', label: 'Recursos' },
     { id: 'kixikila', label: 'Kixikila' },
-    { id: 'firebase-app', label: 'Cloud Firebase', icon: Sparkles, highlight: true },
     { id: 'privacidade', label: 'Privacidade', icon: ShieldCheck },
     { id: 'termos', label: 'Termos', icon: FileText },
     { id: 'eliminar-conta', label: 'Eliminar Conta', icon: UserX, highlight: true },
@@ -30,33 +29,6 @@ export function Navbar({ activeTab, setActiveTab, onOpenDownloadModal }: NavbarP
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b border-[#e2e8f0] shadow-2xs">
-      {/* Top micro-banner for Google Play Store Policy Verification */}
-      <div className="bg-[#0f172a] text-slate-300 text-xs py-1.5 px-4 border-b border-slate-800">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span>
-            <span className="font-semibold text-emerald-400">Google Play Compliance Hub:</span>
-            <span className="text-slate-400 hidden sm:inline">Package ID: <code className="bg-slate-800 px-1.5 py-0.5 rounded text-emerald-400 font-mono text-[11px]">com.kwanzaflow.aoa</code></span>
-          </div>
-          <div className="flex items-center gap-3 text-[11px] text-slate-300">
-            <button 
-              onClick={() => handleNavClick('privacidade')}
-              className="hover:text-white underline decoration-emerald-500/50 cursor-pointer"
-            >
-              Política de Privacidade
-            </button>
-            <span className="text-slate-600">•</span>
-            <button 
-              onClick={() => handleNavClick('eliminar-conta')}
-              className="hover:text-amber-300 font-medium cursor-pointer flex items-center gap-1"
-            >
-              <UserX className="w-3 h-3 text-amber-400" />
-              Exclusão de Dados
-            </button>
-          </div>
-        </div>
-      </div>
-
       {/* Main Navbar: height 70px as in theme */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-[70px]">
