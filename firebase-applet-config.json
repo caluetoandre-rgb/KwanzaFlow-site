@@ -1,12 +1,12 @@
 {
   "projectId": "sitekwanzaflow",
-  "appId": "1:201579636271:web:sitekwanzaflow",
-  "apiKey": "AIzaSyBi4u7HNvNDXz4IymTJAhx_t-b6pWo2yXA",
+  "appId": "1:201579636271:web:3ae86f3a2217d777ab08da",
+  "apiKey": "AIzaSyCJ_67cegf67qXDU63JgUjS_8_oH5w8fZY",
   "authDomain": "sitekwanzaflow.firebaseapp.com",
-  "firestoreDatabaseId": "(default)",
+  "firestoreDatabaseId": "ai-studio-kwanzaflow-f8c66e43-5ebe-4108-a25d-ebe62b729c5c",
   "storageBucket": "sitekwanzaflow.firebasestorage.app",
   "messagingSenderId": "201579636271",
   "measurementId": "",
-  "oAuthClientId": "",
+  "oAuthClientId": "201579636271-rrcr68fa9bgcr8cbuab645adn7tgvb7c.apps.googleusercontent.com",
   "recaptchaSiteKey": ""
 }

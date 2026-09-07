@@ -10,7 +10,7 @@ export function PrivacyPolicy({ setActiveTab }: PrivacyPolicyProps) {
   const [copied, setCopied] = useState(false);
 
   const copyPolicyUrl = () => {
-    const url = 'https://kwanzaflow.online#privacidade';
+    const url = window.location.origin + window.location.pathname + '#privacidade';
     navigator.clipboard.writeText(url);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
@@ -42,7 +42,7 @@ export function PrivacyPolicy({ setActiveTab }: PrivacyPolicyProps) {
               title="Copiar URL para o Google Play Console"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-[#10b981]" /> : <Copy className="w-3.5 h-3.5" />}
-              <span>{copied ? 'URL Copiada!' : 'Copiar Link Oficial'}</span>
+              <span>{copied ? 'URL Copiada!' : 'Copiar URL Google Play'}</span>
             </button>
           </div>
 
@@ -57,8 +57,8 @@ export function PrivacyPolicy({ setActiveTab }: PrivacyPolicyProps) {
               <code className="text-[#10b981] font-mono text-[11px]">com.kwanzaflow.aoa</code>
             </div>
             <div>
-              <span className="text-slate-400 block">Domínio Oficial:</span>
-              <strong className="text-[#10b981] font-mono text-[11px]">kwanzaflow.online</strong>
+              <span className="text-slate-400 block">Projeto Firebase:</span>
+              <code className="text-amber-400 font-mono text-[11px]">akzflow</code>
             </div>
             <div>
               <span className="text-slate-400 block">Última Atualização:</span>
@@ -100,7 +100,10 @@ export function PrivacyPolicy({ setActiveTab }: PrivacyPolicyProps) {
                 <strong className="text-[#0f172a]">Dados Financeiros e Registos de Gestão (Inserção Voluntária):</strong> Valores numéricos em Kwanzas (AOA), categorias de despesas, orçamentos, metas de poupança, registos de quotas de Kixikila e notas simples de vendas/fiados de micro-negócios fornecidos voluntariamente por si.
               </li>
               <li>
-                <strong className="text-[#0f172a]">Dados Técnicos de Diagnóstico:</strong> Relatórios anónimos de estabilidade, modelo de hardware e versão do Android para garantir o correto funcionamento do aplicativo.
+                <strong className="text-[#0f172a]">Identificadores de Dispositivo e Publicidade:</strong> O identificador de publicidade do Android (AAID - <em>Android Advertising ID</em>) para viabilizar anúncios contextuais através do SDK oficial do Google AdMob.
+              </li>
+              <li>
+                <strong className="text-[#0f172a]">Dados Técnicos de Diagnóstico:</strong> Relatórios anónimos de erros operacionais (crashes), modelo de hardware e versão do Android para garantir a estabilidade do sistema.
               </li>
             </ul>
           </div>
@@ -120,7 +123,7 @@ export function PrivacyPolicy({ setActiveTab }: PrivacyPolicyProps) {
                   Sincronização em Nuvem
                 </strong>
                 <span className="text-xs text-[#64748b]">
-                  Armazenamento em tempo real dos seus lançamentos no <strong>Google Cloud Firestore</strong> com infraestrutura criptografada e segura, permitindo restaurar os seus dados caso troque ou formate o seu telemóvel.
+                  Armazenamento em tempo real dos seus lançamentos no <strong>Google Cloud Firestore</strong> (Projeto: <code>akzflow</code>), permitindo restaurar os seus dados caso troque ou formate o seu telemóvel.
                 </span>
               </div>
               <div className="bg-[#f8fafc] p-4 rounded-xl border border-[#e2e8f0]">
@@ -140,21 +143,21 @@ export function PrivacyPolicy({ setActiveTab }: PrivacyPolicyProps) {
           {/* Section 4 */}
           <div className="bg-white p-6 sm:p-7 rounded-2xl border border-[#e2e8f0] shadow-2xs">
             <h2 className="text-lg font-bold text-[#0f172a] flex items-center gap-2 mb-3 border-b-2 border-[#10b981] pb-1 w-fit">
-              <ShieldCheck className="w-5 h-5 text-[#10b981]" />
-              4. Ausência de Publicidade e Sigilo Financeiro
+              <Smartphone className="w-5 h-5 text-[#10b981]" />
+              4. Publicidade e Terceiros (Google AdMob e Cookies)
             </h2>
             <p>
-              O <strong>KwanzaFlow</strong> opera de forma independente e com foco absoluto na privacidade e comodidade do utilizador:
+              Para manter o aplicativo gratuito e acessível a toda a população angolana, utilizamos serviços de publicidade fornecidos pelo <strong>Google AdMob</strong>:
             </p>
             <ul className="list-disc pl-5 mt-2 space-y-2 text-sm text-[#64748b]">
               <li>
-                <strong className="text-[#0f172a]">Sem Anúncios:</strong> O aplicativo não exibe qualquer modalidade de anúncios publicitários, faixas de terceiros ou banners patrocinados.
+                O Google AdMob pode utilizar o Identificador de Publicidade do Google (AAID) e cookies web para limitar a frequência de anúncios exibidos e prevenir fraudes de cliques inválidos.
               </li>
               <li>
-                <strong className="text-[#0f172a]">Isento de Rastreamento Comercial:</strong> Não coletamos identificadores de publicidade (como o AAID) para perfis comerciais nem usamos ferramentas de telemetria para anúncios.
+                <strong className="text-[#0f172a]">Controle do Utilizador:</strong> O utilizador pode redefinir ou desativar a personalização de anúncios a qualquer momento diretamente nas configurações do seu sistema operacional Android em: <em>Definições &gt; Google &gt; Anúncios &gt; Eliminar código de publicidade</em>.
               </li>
               <li>
-                <strong className="text-[#0f172a]">Sigilo Total:</strong> Os seus cálculos orçamentários, saldos e anotações de Kixikila permanecem sob sigilo exclusivo da sua conta.
+                Não partilhamos qualquer dado financeiro sensível (como o montante do seu saldo ou valor de Kixikila) com a rede de publicidade.
               </li>
             </ul>
           </div>
@@ -221,7 +224,7 @@ export function PrivacyPolicy({ setActiveTab }: PrivacyPolicyProps) {
               Esta política é regida pela <strong>Lei n.º 22/11 de Proteção de Dados Pessoais de Angola</strong> e pelas diretrizes internacionais do Google Play Developer Console.
             </p>
             <p className="mt-3 text-sm text-[#64748b]">
-              Para esclarecimentos, exercício dos seus direitos de privacidade ou contacto com o responsável pelo tratamento de dados, envie um e-mail para o canal oficial de suporte: <strong className="text-[#10b981]">appkwanzaflow@gmail.com</strong>.
+              Para esclarecimentos, exercício dos seus direitos de privacidade ou contacto com o responsável pelo tratamento de dados, envie um e-mail para: <strong className="text-[#10b981]">suporte@kwanzaflow.com</strong> (ou <strong className="text-[#10b981]">Caluetoandre@gmail.com</strong>).
             </p>
           </div>
         </div>

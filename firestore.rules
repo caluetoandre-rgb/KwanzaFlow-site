@@ -1,33 +1,14 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if false;
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
     }
-
-    function isValidId(id) {
-      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    match /transactions/{transactionId} {
+      allow read, write: if request.auth != null && (resource == null || resource.data.userId == request.auth.uid || request.resource.data.userId == request.auth.uid);
     }
-
-    function isValidDeletionRequest(data) {
-      return data.keys().hasAll(['id', 'email', 'reason', 'date', 'status']) &&
-        data.keys().size() >= 5 &&
-        data.keys().size() <= 7 &&
-        data.id is string && data.id.size() <= 128 &&
-        data.email is string && data.email.size() <= 160 &&
-        data.reason is string && data.reason.size() <= 200 &&
-        (!('notes' in data) || (data.notes is string && data.notes.size() <= 500)) &&
-        data.date is string && data.date.size() <= 64 &&
-        data.status is string && data.status.size() <= 32 &&
-        (!('estimatedPurgeDate' in data) || (data.estimatedPurgeDate is string && data.estimatedPurgeDate.size() <= 64));
-    }
-
-    match /deletionRequests/{requestId} {
-      allow get: if isValidId(requestId);
-      allow list: if true;
-      allow create: if isValidId(requestId) && isValidDeletionRequest(request.resource.data);
-      allow update: if false;
-      allow delete: if false;
+    match /kixikilas/{groupId} {
+      allow read, write: if request.auth != null;
     }
   }
 }

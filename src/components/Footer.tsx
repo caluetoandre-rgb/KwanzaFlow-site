@@ -5,12 +5,13 @@ import { ActiveTab } from '../types';
 
 interface FooterProps {
   setActiveTab: (tab: ActiveTab) => void;
+  onOpenCodeModal: () => void;
   onOpenDownloadModal: () => void;
 }
 
-export function Footer({ setActiveTab, onOpenDownloadModal }: FooterProps) {
+export function Footer({ setActiveTab, onOpenCodeModal, onOpenDownloadModal }: FooterProps) {
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const supportEmail = 'appkwanzaflow@gmail.com';
+  const supportEmail = 'suporte@kwanzaflow.com';
 
   const copyEmail = () => {
     navigator.clipboard.writeText(supportEmail);
@@ -37,8 +38,15 @@ export function Footer({ setActiveTab, onOpenDownloadModal }: FooterProps) {
               <span className="w-2 h-2 rounded-full bg-[#10b981]"></span>
               <span>Em total conformidade com a Google Play Store 2026</span>
             </div>
-            <div className="text-xs text-slate-400 pt-1">
-              Portal Oficial: <a href="https://kwanzaflow.online" className="text-[#10b981] font-semibold hover:underline">kwanzaflow.online</a>
+            {/* Direct button to inspect or copy the standalone Firebase Hosting HTML */}
+            <div className="pt-2">
+              <button
+                onClick={onOpenCodeModal}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-[8px] bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-all border border-slate-700 cursor-pointer"
+              >
+                <Code2 className="w-3.5 h-3.5 text-[#10b981]" />
+                <span>Ver Código HTML Autocontido (public/index.html)</span>
+              </button>
             </div>
           </div>
 
@@ -83,15 +91,13 @@ export function Footer({ setActiveTab, onOpenDownloadModal }: FooterProps) {
                 </button>
               </li>
               <li>
-                <a
-                  href="/app-ads.txt"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => handleNav('termos')}
                   className="hover:text-[#10b981] transition-colors flex items-center gap-1.5 cursor-pointer"
                 >
-                  <FileText className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>app-ads.txt (IAB Tech Lab)</span>
-                </a>
+                  <FileText className="w-3.5 h-3.5 text-slate-400" />
+                  <span>Termos de Uso</span>
+                </button>
               </li>
               <li>
                 <button
@@ -127,8 +133,8 @@ export function Footer({ setActiveTab, onOpenDownloadModal }: FooterProps) {
                 <span>{copiedEmail ? 'E-mail Copiado!' : 'Copiar E-mail de Apoio'}</span>
               </button>
             </div>
-            <div className="text-[11px] text-slate-400">
-              Portal: <span className="text-[#10b981] font-semibold">kwanzaflow.online</span>
+            <div className="text-[11px] text-slate-500">
+              Alternativo: Caluetoandre@gmail.com
             </div>
           </div>
         </div>
@@ -136,7 +142,7 @@ export function Footer({ setActiveTab, onOpenDownloadModal }: FooterProps) {
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <div className="flex items-center gap-2">
-            <span>© 2026 KwanzaFlow (kwanzaflow.online). Feito para Angola.</span>
+            <span>© 2026 KwanzaFlow. Feito para Angola.</span>
             <span>🇦🇴</span>
           </div>
 

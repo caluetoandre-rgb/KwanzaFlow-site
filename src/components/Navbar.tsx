@@ -16,6 +16,7 @@ export function Navbar({ activeTab, setActiveTab, onOpenDownloadModal }: NavbarP
     { id: 'inicio', label: 'Início' },
     { id: 'recursos', label: 'Recursos' },
     { id: 'kixikila', label: 'Kixikila' },
+    { id: 'firebase-app', label: 'Cloud Firebase', icon: Sparkles, highlight: true },
     { id: 'privacidade', label: 'Privacidade', icon: ShieldCheck },
     { id: 'termos', label: 'Termos', icon: FileText },
     { id: 'eliminar-conta', label: 'Eliminar Conta', icon: UserX, highlight: true },

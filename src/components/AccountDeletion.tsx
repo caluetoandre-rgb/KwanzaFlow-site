@@ -1,8 +1,6 @@
 import { useState, FormEvent } from 'react';
-import { UserX, Trash2, CheckCircle2, Clock, ShieldAlert, Copy, Check } from 'lucide-react';
+import { UserX, Trash2, CheckCircle2, AlertOctagon, Clock, ShieldAlert, Copy, Check, ArrowRight, HelpCircle } from 'lucide-react';
 import { DeletionRequest } from '../types';
-import { db, OperationType, handleFirestoreError } from '../lib/firebase';
-import { doc, setDoc } from 'firebase/firestore';
 
 export function AccountDeletion() {
   const [email, setEmail] = useState('');
@@ -14,51 +12,48 @@ export function AccountDeletion() {
   const [copiedUrl, setCopiedUrl] = useState(false);
 
   const copyDeletionUrl = () => {
-    const url = 'https://kwanzaflow.online#eliminar-conta';
+    const url = window.location.origin + window.location.pathname + '#eliminar-conta';
     navigator.clipboard.writeText(url);
     setCopiedUrl(true);
     setTimeout(() => setCopiedUrl(false), 2500);
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!email || !confirmed) return;
 
     setIsSubmitting(true);
 
-    const now = new Date();
-    const purgeDate = new Date();
-    purgeDate.setDate(now.getDate() + 30);
+    // Simulate reliable deletion request processing
+    setTimeout(() => {
+      const now = new Date();
+      const purgeDate = new Date();
+      purgeDate.setDate(now.getDate() + 30);
 
-    const randomSuffix = Math.floor(10000 + Math.random() * 90000);
-    const newRequest: DeletionRequest = {
-      id: `KF-DEL-2026-${randomSuffix}`,
-      email: email.trim(),
-      reason,
-      notes: notes.trim(),
-      date: now.toLocaleDateString('pt-AO', {
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      }),
-      status: 'processado',
-      estimatedPurgeDate: purgeDate.toLocaleDateString('pt-AO', {
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric',
-      }),
-    };
+      const randomSuffix = Math.floor(10000 + Math.random() * 90000);
+      const newRequest: DeletionRequest = {
+        id: `KF-DEL-2026-${randomSuffix}`,
+        email: email.trim(),
+        reason,
+        notes: notes.trim(),
+        date: now.toLocaleDateString('pt-AO', {
+          day: '2-digit',
+          month: 'long',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+        status: 'processado',
+        estimatedPurgeDate: purgeDate.toLocaleDateString('pt-AO', {
+          day: '2-digit',
+          month: 'long',
+          year: 'numeric',
+        }),
+      };
 
-    try {
-      await setDoc(doc(db, 'deletionRequests', newRequest.id), newRequest);
       setSubmittedRequest(newRequest);
-    } catch (error) {
-      handleFirestoreError(error, OperationType.WRITE, `deletionRequests/${newRequest.id}`);
-    } finally {
       setIsSubmitting(false);
-    }
+    }, 800);
   };
 
   const handleReset = () => {
