@@ -1,3 +1,4 @@
+runtime: nodejs20
 runConfig:
   minInstances: 0
   maxInstances: 10
