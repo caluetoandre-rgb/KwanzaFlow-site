@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.kwanzaflow.aoa",
+      "sha256_cert_fingerprints": [
+        "1B:73:1D:C1:60:AC:D9:37:7E:85:FC:0B:E8:3B:F5:CA:73:9F:EB:8A:CE:D2:55:EB:31:50:6E:CB:EA:54:28:54"
+      ]
+    }
+  }
+]
