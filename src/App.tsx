@@ -48,12 +48,13 @@ export default function App() {
       <main className="flex-grow">
         {activeTab === 'inicio' && (
           <div className="animate-in fade-in duration-200">
-            <Hero
-              onExploreFeatures={() => handleTabChange('recursos')}
+            {/* Carrossel Oficial de Destaques - Logo abaixo do menu de navegação */}
+            <BannerCarousel
               onOpenDownloadModal={() => setIsDownloadModalOpen(true)}
               setActiveTab={handleTabChange}
             />
-            <BannerCarousel
+            <Hero
+              onExploreFeatures={() => handleTabChange('recursos')}
               onOpenDownloadModal={() => setIsDownloadModalOpen(true)}
               setActiveTab={handleTabChange}
             />

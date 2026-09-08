@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { KwanzaLogo } from './KwanzaLogo';
 import { ActiveTab } from '../types';
-import { Menu, X, Download, ShieldCheck, UserX, FileText, Sparkles } from 'lucide-react';
+import { Menu, X, Download, ShieldCheck, UserX, FileText, Sparkles, Facebook } from 'lucide-react';
 
 interface NavbarProps {
   activeTab: ActiveTab;
@@ -69,8 +69,19 @@ export function Navbar({ activeTab, setActiveTab, onOpenDownloadModal }: NavbarP
             })}
           </nav>
 
-          {/* Download CTA matching .btn-playstore from theme: background: var(--bg-slate); border-radius: 8px; font-weight: 600 */}
+          {/* Download CTA & Social Links */}
           <div className="hidden sm:flex items-center gap-3">
+            <a
+              href="https://facebook.com/KwanzaFlow"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 text-[#64748b] hover:text-[#1877F2] hover:bg-blue-50/50 rounded-lg transition-colors cursor-pointer border border-transparent hover:border-blue-100"
+              title="Página Oficial no Facebook (facebook.com/KwanzaFlow)"
+              aria-label="Página Oficial no Facebook"
+            >
+              <Facebook className="w-4 h-4 fill-current text-[#1877F2]" />
+            </a>
+
             <button
               onClick={onOpenDownloadModal}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[8px] bg-[#0f172a] hover:bg-[#1e293b] text-white text-[13px] font-semibold shadow-xs hover:shadow transition-all duration-150 cursor-pointer group"
@@ -135,7 +146,7 @@ export function Navbar({ activeTab, setActiveTab, onOpenDownloadModal }: NavbarP
             );
           })}
 
-          <div className="pt-4 border-t border-slate-100">
+          <div className="pt-4 border-t border-slate-100 space-y-2">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
@@ -146,6 +157,16 @@ export function Navbar({ activeTab, setActiveTab, onOpenDownloadModal }: NavbarP
               <Download className="w-4 h-4" />
               <span>Baixar na Google Play Store</span>
             </button>
+
+            <a
+              href="https://facebook.com/KwanzaFlow"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-colors"
+            >
+              <Facebook className="w-4 h-4 fill-current text-[#1877F2]" />
+              <span>Siga-nos no Facebook: /KwanzaFlow</span>
+            </a>
           </div>
         </div>
       )}

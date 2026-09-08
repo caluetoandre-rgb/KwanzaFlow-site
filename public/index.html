@@ -51,6 +51,8 @@
       opacity: 1;
     }
   </style>
+  <!-- Carrossel Moderno KwanzaFlow (CSS3 Puro) -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-emerald-500 selection:text-white">
 
@@ -184,6 +186,129 @@
 
   <!-- ==================== TAB 1: INÍCIO (LANDING PAGE) ==================== -->
   <main id="tab-inicio" class="tab-content active">
+
+    <!-- ========================================================================= -->
+    <!-- CARROSSEL OFICIAL KWANZAFLOW: 6 IMAGENS GOOGLE PLAY STORE (SEM DISTORÇÃO)  -->
+    <!-- Posicionado estrategicamente logo abaixo do menu de navegação              -->
+    <!-- ========================================================================= -->
+    <section class="kf-carousel-section" aria-label="Apresentação Visual KwanzaFlow">
+      <div class="kf-carousel-wrapper">
+        
+        <!-- Cabeçalho do Carrossel com Status e Controles Rápidos -->
+        <div class="kf-carousel-header">
+          <div class="kf-carousel-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <span>Destaques da Google Play Store (Versão 20)</span>
+          </div>
+
+          <div class="kf-carousel-status">
+            <span class="kf-carousel-counter">01 / 06</span>
+            <button type="button" class="kf-carousel-toggle" aria-label="Pausar ou Iniciar Rotação Automática">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+              <span>Pausar</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Container do Carrossel (Proporção 16:9 Adaptativa) -->
+        <div class="kf-carousel-container" role="region" aria-roledescription="carousel">
+          <div class="kf-carousel-glow"></div>
+
+          <!-- Slides do Carrossel -->
+          <div class="kf-carousel-slides">
+            
+            <!-- SLIDE 1: Gestão Financeira, Receitas e Despesas -->
+            <div class="kf-carousel-slide active" role="group" aria-roledescription="slide" aria-label="1 de 6">
+              <img 
+                src="assets/imagem-1.svg" 
+                alt="KwanzaFlow - Saiba onde Vai seu dinheiro e tenha controle das receitas e despesas"
+                class="kf-carousel-image"
+                loading="eager"
+              />
+            </div>
+
+            <!-- SLIDE 2: Kixikila Digital e Poupanças em Família -->
+            <div class="kf-carousel-slide" role="group" aria-roledescription="slide" aria-label="2 de 6">
+              <img 
+                src="assets/imagem-2.svg" 
+                alt="KwanzaFlow - Faça suas poupanças em família e alcance suas metas. A Kixikila Angolana Digital"
+                class="kf-carousel-image"
+                loading="lazy"
+              />
+            </div>
+
+            <!-- SLIDE 3: Modo Negócio para Empreendedores -->
+            <div class="kf-carousel-slide" role="group" aria-roledescription="slide" aria-label="3 de 6">
+              <img 
+                src="assets/imagem-3.svg" 
+                alt="KwanzaFlow - Acesse o Modo Negócio para Empreendedores: Estoque, Fiados e DRE"
+                class="kf-carousel-image"
+                loading="lazy"
+              />
+            </div>
+
+            <!-- SLIDE 4: Consultoria Financeira com IA e Faturas -->
+            <div class="kf-carousel-slide" role="group" aria-roledescription="slide" aria-label="4 de 6">
+              <img 
+                src="assets/imagem-4.svg" 
+                alt="KwanzaFlow - Consultoria Financeira com Inteligência Artificial e registro com foto na fatura"
+                class="kf-carousel-image"
+                loading="lazy"
+              />
+            </div>
+
+            <!-- SLIDE 5: Quite Dívidas e Gestão de Empréstimos -->
+            <div class="kf-carousel-slide" role="group" aria-roledescription="slide" aria-label="5 de 6">
+              <img 
+                src="assets/imagem-5.svg" 
+                alt="KwanzaFlow - Quite Dívidas e Faça Gestão de Empréstimos com Estratégia Avalanche"
+                class="kf-carousel-image"
+                loading="lazy"
+              />
+            </div>
+
+            <!-- SLIDE 6: Continue Aprendendo Sobre Finanças Pessoais -->
+            <div class="kf-carousel-slide" role="group" aria-roledescription="slide" aria-label="6 de 6">
+              <img 
+                src="assets/imagem-6.svg" 
+                alt="KwanzaFlow - Continue Aprendendo Sobre Finanças Pessoais e Investimentos na BODIVA"
+                class="kf-carousel-image"
+                loading="lazy"
+              />
+            </div>
+
+          </div>
+
+          <!-- Botões Laterais de Navegação (Estilizados e de Alto Contraste) -->
+          <button type="button" class="kf-carousel-nav-btn kf-carousel-prev" aria-label="Imagem Anterior">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <button type="button" class="kf-carousel-nav-btn kf-carousel-next" aria-label="Próxima Imagem">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+
+          <!-- Barra Inferior com Indicadores e Título do Slide -->
+          <div class="kf-carousel-footer">
+            <div class="kf-carousel-info">
+              <div class="kf-carousel-info-tag">1. Gestão Financeira</div>
+              <div class="kf-carousel-info-title">Saiba onde Vai seu dinheiro e tenha controle das receitas e despesas</div>
+            </div>
+
+            <!-- Indicadores de Posição (6 Bolinhas/Dots Clicáveis) -->
+            <div class="kf-carousel-dots" role="tablist" aria-label="Seleção de Imagens">
+              <button type="button" class="kf-carousel-dot active" role="tab" aria-label="Imagem 1" aria-selected="true"></button>
+              <button type="button" class="kf-carousel-dot" role="tab" aria-label="Imagem 2" aria-selected="false"></button>
+              <button type="button" class="kf-carousel-dot" role="tab" aria-label="Imagem 3" aria-selected="false"></button>
+              <button type="button" class="kf-carousel-dot" role="tab" aria-label="Imagem 4" aria-selected="false"></button>
+              <button type="button" class="kf-carousel-dot" role="tab" aria-label="Imagem 5" aria-selected="false"></button>
+              <button type="button" class="kf-carousel-dot" role="tab" aria-label="Imagem 6" aria-selected="false"></button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <!-- Hero Section -->
     <section class="relative overflow-hidden pt-8 pb-16 lg:py-20 bg-gradient-to-b from-emerald-950 via-emerald-900 to-slate-900 text-white">
       <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -831,5 +956,7 @@
       document.getElementById('deletion-success-container').classList.remove('hidden');
     }
   </script>
+  <!-- Carrossel Interativo KwanzaFlow (JavaScript Vanilla) -->
+  <script src="script.js"></script>
 </body>
 </html>

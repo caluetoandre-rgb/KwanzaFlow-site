@@ -1,4 +1,4 @@
-import { X, Check, ShieldCheck, Smartphone, Download, Star } from 'lucide-react';
+import { X, Check, ShieldCheck, Smartphone, Download, Star, Facebook } from 'lucide-react';
 import { KwanzaLogo } from './KwanzaLogo';
 
 interface DownloadModalProps {
@@ -28,13 +28,16 @@ export function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
               <ShieldCheck className="w-4 h-4" />
               <span>Verificado pelo Google Play Protect</span>
             </div>
+            <div className="text-xs text-[#64748b] mt-0.5 font-medium">
+              Publicação Oficial na Loja Google Play
+            </div>
           </div>
         </div>
 
         <div className="bg-[#f8fafc] border border-[#e2e8f0] rounded-xl p-4 mb-6 space-y-2.5 text-xs sm:text-sm">
           <div className="flex justify-between items-center">
-            <span className="text-[#64748b]">Nome do Aplicativo:</span>
-            <span className="font-bold text-[#0f172a]">KwanzaFlow - Finanças & Kixikila</span>
+            <span className="text-[#64748b]">Nome na Loja Google:</span>
+            <span className="font-bold text-[#0f172a]">KwanzaFlow - Finanças & Gestão</span>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-[#64748b]">Identificador (Package):</span>
@@ -52,7 +55,7 @@ export function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
           </div>
           <div className="flex justify-between items-center">
             <span className="text-[#64748b]">Classificação:</span>
-            <span className="text-[#0f172a] font-medium">Livre / Finanças Pessoais</span>
+            <span className="text-[#0f172a] font-medium">Livre / Finanças & Gestão</span>
           </div>
         </div>
 
@@ -69,14 +72,28 @@ export function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
               <path d="M3.609 1.814L13.792 12 3.61 22.186a2.38 2.38 0 0 1-.61-.986V2.8a2.38 2.38 0 0 1 .61-.986zm11.602 11.602l2.394-2.394-11.45-6.52 9.056 8.914zm0-2.832L6.155 1.67l11.45 6.52-2.394 2.394zm1.414 1.414l3.18-1.813c1.07-.61 1.07-1.604 0-2.214l-3.18-1.813-2.122 2.12 2.122 2.12z" />
             </svg>
             <div className="text-left leading-tight">
-              <div className="text-[11px] uppercase tracking-wider text-slate-400">Instalar via</div>
-              <div className="text-base font-black">Google Play Store</div>
+              <div className="text-[11px] uppercase tracking-wider text-slate-400">Instalar na Play Store</div>
+              <div className="text-base font-black">KwanzaFlow - Finanças & Gestão</div>
             </div>
           </a>
 
           <p className="text-[11px] text-center text-[#64748b]">
             Gratuito • Sem taxas ocultas • Sincronização segura via Firebase
           </p>
+
+          {/* Facebook Official Community Link */}
+          <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-[#64748b]">
+            <span>Página Oficial:</span>
+            <a
+              href="https://facebook.com/KwanzaFlow"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 font-semibold text-[#1877F2] hover:underline"
+            >
+              <Facebook className="w-3.5 h-3.5 fill-current" />
+              <span>facebook.com/KwanzaFlow</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>

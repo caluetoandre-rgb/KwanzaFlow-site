@@ -1,4 +1,5 @@
 import { TrendingUp, ShieldCheck, Users, Store, ArrowRight, CheckCircle2, ChevronRight, PieChart, Sparkles } from 'lucide-react';
+import { KwanzaLogo } from './KwanzaLogo';
 import { ActiveTab } from '../types';
 
 interface HeroProps {
@@ -114,7 +115,7 @@ export function Hero({ onExploreFeatures, onOpenDownloadModal, setActiveTab }: H
               {/* Top Bar of the Phone mockup */}
               <div className="flex items-center justify-between text-white text-xs">
                 <div className="flex items-center gap-2 font-bold tracking-tight">
-                  <div className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center font-black text-xs">K</div>
+                  <KwanzaLogo className="w-6 h-6" withText={false} />
                   <span>KwanzaFlow</span>
                 </div>
                 <span className="bg-white/20 text-[10px] px-2 py-0.5 rounded-full font-semibold">Android AO</span>
@@ -160,8 +161,8 @@ export function Hero({ onExploreFeatures, onOpenDownloadModal, setActiveTab }: H
             <div className="hidden sm:flex absolute -bottom-4 -left-4 bg-white text-[#0f172a] p-3 rounded-xl shadow-md border border-[#e2e8f0] items-center gap-2.5">
               <ShieldCheck className="w-5 h-5 text-[#10b981]" />
               <div className="text-xs">
-                <div className="font-bold">Google Play 2026</div>
-                <div className="text-[11px] text-[#64748b]">Conformidade Total Data Safety</div>
+                <div className="font-bold">KwanzaFlow - Finanças & Gestão</div>
+                <div className="text-[11px] text-[#64748b]">Google Play Store • com.kwanzaflow.aoa</div>
               </div>
             </div>
           </div>
