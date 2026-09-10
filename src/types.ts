@@ -8,6 +8,8 @@ export interface DeletionRequest {
   date: string;
   status: 'processado' | 'pendente' | 'concluido';
   estimatedPurgeDate: string;
+  verifiedAt?: string;
+  adminNotifiedEmail?: string;
 }
 
 export interface KixikilaSimulation {

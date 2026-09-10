@@ -40,6 +40,31 @@
         "creatorId": { "type": "string" }
       },
       "required": ["id", "name", "contributionAmount"]
+    },
+    "DeletionRequest": {
+      "title": "DeletionRequest",
+      "description": "Verified Google Play account deletion request",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "reason": { "type": "string" },
+        "notes": { "type": "string" },
+        "date": { "type": "string" },
+        "status": { "type": "string" },
+        "estimatedPurgeDate": { "type": "string" },
+        "verifiedAt": { "type": "string" },
+        "adminNotifiedEmail": { "type": "string" }
+      },
+      "required": ["id", "email", "status", "date"]
+    },
+    "TestConnection": {
+      "title": "TestConnection",
+      "description": "Health check document for testing Firestore connectivity",
+      "type": "object",
+      "properties": {
+        "status": { "type": "string" }
+      }
     }
   },
   "firestore": {
@@ -54,6 +79,14 @@
     "/kixikilas/{groupId}": {
       "schema": { "$ref": "#/entities/KixikilaGroup" },
       "description": "Kixikila community groups"
+    },
+    "/deletion_requests/{requestId}": {
+      "schema": { "$ref": "#/entities/DeletionRequest" },
+      "description": "Account deletion requests submitted with email verification"
+    },
+    "/test/{testId}": {
+      "schema": { "$ref": "#/entities/TestConnection" },
+      "description": "Firestore connection health check document"
     }
   }
 }

@@ -1,15 +1,53 @@
-import { useState, FormEvent } from 'react';
-import { UserX, Trash2, CheckCircle2, AlertOctagon, Clock, ShieldAlert, Copy, Check, ArrowRight, HelpCircle } from 'lucide-react';
+import { useState, FormEvent, useEffect } from 'react';
+import {
+  UserX,
+  Trash2,
+  CheckCircle2,
+  Clock,
+  ShieldAlert,
+  Copy,
+  Check,
+  Mail,
+  KeyRound,
+  ShieldCheck,
+  RefreshCw,
+  Send,
+  AlertTriangle,
+  ArrowLeft,
+} from 'lucide-react';
 import { DeletionRequest } from '../types';
+import { db } from '../lib/firebase';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 export function AccountDeletion() {
+  // Step: 1 = Email & reason input, 2 = Code verification, 3 = Confirmed protocol screen
+  const [step, setStep] = useState<1 | 2 | 3>(1);
+
   const [email, setEmail] = useState('');
   const [reason, setReason] = useState('Não utilizo mais o aplicativo');
   const [notes, setNotes] = useState('');
+  const [verificationCode, setVerificationCode] = useState('');
   const [confirmed, setConfirmed] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // States for API requests and feedback
+  const [isSendingCode, setIsSendingCode] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [feedbackError, setFeedbackError] = useState<string | null>(null);
+  const [feedbackSuccess, setFeedbackSuccess] = useState<string | null>(null);
+  const [previewCode, setPreviewCode] = useState<string | null>(null);
+  const [resendCooldown, setResendCooldown] = useState(0);
+
   const [submittedRequest, setSubmittedRequest] = useState<DeletionRequest | null>(null);
   const [copiedUrl, setCopiedUrl] = useState(false);
+  const [copiedProtocol, setCopiedProtocol] = useState(false);
+
+  // Resend cooldown timer
+  useEffect(() => {
+    if (resendCooldown > 0) {
+      const timer = setTimeout(() => setResendCooldown((prev) => prev - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [resendCooldown]);
 
   const copyDeletionUrl = () => {
     const url = window.location.origin + window.location.pathname + '#eliminar-conta';
@@ -18,56 +56,173 @@ export function AccountDeletion() {
     setTimeout(() => setCopiedUrl(false), 2500);
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const copyProtocolText = (protocol: string) => {
+    navigator.clipboard.writeText(protocol);
+    setCopiedProtocol(true);
+    setTimeout(() => setCopiedProtocol(false), 2500);
+  };
+
+  /**
+   * Send 6-digit confirmation code to the user's email
+   */
+  const handleRequestCode = async (e: FormEvent) => {
     e.preventDefault();
-    if (!email || !confirmed) return;
+    setFeedbackError(null);
+    setFeedbackSuccess(null);
 
-    setIsSubmitting(true);
+    const cleanEmail = email.trim();
+    if (!cleanEmail || !cleanEmail.includes('@')) {
+      setFeedbackError('Por favor, informe um endereço de e-mail válido.');
+      return;
+    }
 
-    // Simulate reliable deletion request processing
-    setTimeout(() => {
-      const now = new Date();
-      const purgeDate = new Date();
-      purgeDate.setDate(now.getDate() + 30);
+    setIsSendingCode(true);
 
-      const randomSuffix = Math.floor(10000 + Math.random() * 90000);
-      const newRequest: DeletionRequest = {
-        id: `KF-DEL-2026-${randomSuffix}`,
-        email: email.trim(),
-        reason,
-        notes: notes.trim(),
-        date: now.toLocaleDateString('pt-AO', {
-          day: '2-digit',
-          month: 'long',
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
+    try {
+      const response = await fetch('/api/account-deletion/send-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: cleanEmail }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || 'Não foi possível enviar o código. Tente novamente.');
+      }
+
+      setFeedbackSuccess(data.message || `Código enviado para ${cleanEmail}.`);
+      if (data.previewCode) {
+        setPreviewCode(data.previewCode);
+      }
+      setResendCooldown(60);
+      setStep(2);
+    } catch (err: any) {
+      setFeedbackError(err.message || 'Erro ao conectar ao servidor. Tente novamente.');
+    } finally {
+      setIsSendingCode(false);
+    }
+  };
+
+  /**
+   * Resend code
+   */
+  const handleResendCode = async () => {
+    if (resendCooldown > 0 || isSendingCode) return;
+    setFeedbackError(null);
+    setFeedbackSuccess(null);
+    setIsSendingCode(true);
+
+    try {
+      const response = await fetch('/api/account-deletion/send-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || 'Não foi possível reenviar o código.');
+      }
+
+      setFeedbackSuccess('Novo código de verificação enviado para o seu e-mail.');
+      if (data.previewCode) {
+        setPreviewCode(data.previewCode);
+      }
+      setResendCooldown(60);
+    } catch (err: any) {
+      setFeedbackError(err.message || 'Falha ao reenviar código.');
+    } finally {
+      setIsSendingCode(false);
+    }
+  };
+
+  /**
+   * Verify code and submit deletion request
+   */
+  const handleVerifyAndSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setFeedbackError(null);
+    setFeedbackSuccess(null);
+
+    const cleanCode = verificationCode.trim();
+    if (cleanCode.length < 4) {
+      setFeedbackError('Por favor, informe o código completo de confirmação recebido no seu e-mail.');
+      return;
+    }
+
+    if (!confirmed) {
+      setFeedbackError('É necessário declarar expressamente a confirmação de titularidade da conta.');
+      return;
+    }
+
+    setIsVerifying(true);
+
+    try {
+      const response = await fetch('/api/account-deletion/verify-and-submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email.trim(),
+          code: cleanCode,
+          reason,
+          notes,
         }),
-        status: 'processado',
-        estimatedPurgeDate: purgeDate.toLocaleDateString('pt-AO', {
-          day: '2-digit',
-          month: 'long',
-          year: 'numeric',
-        }),
-      };
+      });
 
-      setSubmittedRequest(newRequest);
-      setIsSubmitting(false);
-    }, 800);
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || 'Código de confirmação incorreto ou expirado.');
+      }
+
+      const verifiedRequest: DeletionRequest = data.request;
+
+      // Also persist to Firestore for durable audit trail
+      try {
+        await setDoc(doc(db, 'deletion_requests', verifiedRequest.id), {
+          id: verifiedRequest.id,
+          email: verifiedRequest.email,
+          reason: verifiedRequest.reason,
+          notes: verifiedRequest.notes || '',
+          date: verifiedRequest.date,
+          status: 'processado',
+          estimatedPurgeDate: verifiedRequest.estimatedPurgeDate,
+          verifiedAt: verifiedRequest.verifiedAt || new Date().toISOString(),
+          adminNotifiedEmail: 'appkwanzaflow@gmail.com',
+          createdAt: serverTimestamp(),
+        });
+      } catch (firestoreErr) {
+        console.warn('Firestore backup note:', firestoreErr);
+      }
+
+      setSubmittedRequest(verifiedRequest);
+      setStep(3);
+    } catch (err: any) {
+      setFeedbackError(err.message || 'Erro ao validar código. Verifique e tente novamente.');
+    } finally {
+      setIsVerifying(false);
+    }
   };
 
   const handleReset = () => {
     setSubmittedRequest(null);
     setEmail('');
+    setVerificationCode('');
     setNotes('');
     setConfirmed(false);
+    setFeedbackError(null);
+    setFeedbackSuccess(null);
+    setPreviewCode(null);
+    setStep(1);
   };
 
   return (
     <section id="eliminar-conta" className="py-12 sm:py-16 bg-[#f8fafc] text-[#1e293b]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Compliance Header Card with Google Play URL Copier */}
-        <div className="bg-[#0f172a] text-white rounded-2xl p-6 sm:p-8 shadow-lg border border-slate-800 mb-10">
+        <div className="bg-[#0f172a] text-white rounded-2xl p-6 sm:p-8 shadow-lg border border-slate-800 mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
             <div className="flex items-center gap-3.5">
               <div className="w-12 h-12 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center border border-rose-500/30">
@@ -99,12 +254,20 @@ export function AccountDeletion() {
           </div>
 
           <p className="text-xs sm:text-sm text-slate-300 pt-4 leading-relaxed">
-            Em total conformidade com os requisitos da Google Play Store para desenvolvedores, disponibilizamos esta página pública onde qualquer utilizador do aplicativo <strong>KwanzaFlow</strong> pode solicitar a remoção completa da sua conta, perfil de utilizador e histórico financeiro, sem ser obrigado a instalar novamente o aplicativo no telemóvel.
+            Em conformidade com as diretrizes da Google Play Store, disponibilizamos esta página pública para solicitação de remoção de conta, perfil e dados financeiros do aplicativo <strong>KwanzaFlow</strong>.
           </p>
+
+          {/* Anti-fraud Protection Highlight */}
+          <div className="mt-4 p-3.5 rounded-xl bg-slate-800/80 border border-slate-700/80 flex items-start gap-3">
+            <ShieldCheck className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+            <p className="text-xs text-slate-200 leading-relaxed">
+              <strong>Proteção Antifraude Obrigatória:</strong> Para evitar que terceiros solicitem indevidamente a exclusão da conta de outra pessoa, o sistema exige a comprovação de titularidade através de um <strong>código de verificação enviado para o e-mail cadastrado</strong> antes de qualquer confirmação.
+            </p>
+          </div>
         </div>
 
         {/* Breakdown of What is Deleted vs Retained */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {/* Box 1: Deleted Immediately */}
           <div className="bg-white border border-[#e2e8f0] p-6 rounded-2xl shadow-2xs">
             <div className="flex items-center gap-2 text-rose-600 font-bold text-base mb-3">
@@ -115,19 +278,19 @@ export function AccountDeletion() {
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#10b981] flex-shrink-0 mt-0.5" />
                 <span>
-                  <strong className="text-[#0f172a]">Registo de Autenticação:</strong> Eliminação do seu perfil (UID, e-mail e nome) no Google Firebase Authentication.
+                  <strong className="text-[#0f172a]">Registo de Autenticação:</strong> Desativação e exclusão definitiva do perfil (UID e e-mail) no Google Firebase Authentication.
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#10b981] flex-shrink-0 mt-0.5" />
                 <span>
-                  <strong className="text-[#0f172a]">Documentos Financeiros no Firestore:</strong> Purga irreversível de transações, orçamentos 50/30/20 e categorias no banco de dados.
+                  <strong className="text-[#0f172a]">Documentos no Firestore:</strong> Purga irreversível de lançamentos, categorias e orçamentos 50/30/20.
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#10b981] flex-shrink-0 mt-0.5" />
                 <span>
-                  <strong className="text-[#0f172a]">Kixikilas e Micro-Negócios:</strong> Desvinculação imediata de grupos de poupança coletiva e livros de caixa comerciais.
+                  <strong className="text-[#0f172a]">Kixikilas e Poupanças:</strong> Desvinculação imediata dos grupos coletivos e histórico financeiro.
                 </span>
               </li>
             </ul>
@@ -137,33 +300,86 @@ export function AccountDeletion() {
           <div className="bg-white border border-[#e2e8f0] p-6 rounded-2xl shadow-2xs">
             <div className="flex items-center gap-2 text-amber-600 font-bold text-base mb-3">
               <Clock className="w-5 h-5 text-amber-600" />
-              <span>Retenção Temporária de Segurança:</span>
+              <span>Retenção Técnica de Segurança:</span>
             </div>
             <p className="text-xs sm:text-sm text-[#64748b] leading-relaxed mb-3">
               Certos dados técnicos anónimos podem permanecer retidos em servidores de cópia de segurança por um período estritamente limitado:
             </p>
-            <div className="bg-[#f8fafc] p-3 rounded-xl border border-[#e2e8f0] text-xs text-slate-700 space-y-1.5">
+            <div className="bg-[#f8fafc] p-3.5 rounded-xl border border-[#e2e8f0] text-xs text-slate-700 space-y-1.5">
               <div className="font-semibold text-[#0f172a] flex items-center gap-1.5">
                 <ShieldAlert className="w-4 h-4 text-amber-600" />
                 <span>Prazo Máximo de Retenção: Até 30 dias</span>
               </div>
-              <p className="text-[#64748b]">
-                Apenas para registros de logs técnicos de auditoria, prevenção contra fraudes de sistema ou cumprimento de normas legais vigentes em Angola. Decorridos os 30 dias, estes dados são apagados de forma automatizada e definitiva.
+              <p className="text-[#64748b] leading-relaxed">
+                Utilizado exclusivamente para logs de auditoria técnica, prevenção contra abusos e conformidade legal. Ao término do prazo, a exclusão nos backups é automatizada.
               </p>
             </div>
           </div>
         </div>
 
-        {/* Functional Interactive Deletion Request Form */}
+        {/* Step Progress Indicator */}
+        {step !== 3 && (
+          <div className="flex items-center justify-between mb-4 px-2">
+            <div className="flex items-center gap-2">
+              <span
+                className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
+                  step === 1 ? 'bg-rose-600 text-white' : 'bg-emerald-600 text-white'
+                }`}
+              >
+                1
+              </span>
+              <span className="text-xs font-semibold text-[#0f172a]">
+                1. Informar E-mail
+              </span>
+            </div>
+            <div className="flex-1 mx-4 h-0.5 bg-slate-200">
+              <div
+                className={`h-full transition-all duration-300 ${
+                  step === 2 ? 'w-full bg-rose-600' : 'w-0'
+                }`}
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <span
+                className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
+                  step === 2 ? 'bg-rose-600 text-white' : 'bg-slate-200 text-slate-500'
+                }`}
+              >
+                2
+              </span>
+              <span className={`text-xs font-semibold ${step === 2 ? 'text-[#0f172a]' : 'text-slate-400'}`}>
+                2. Confirmar Código & Excluir
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Feedback Alerts */}
+        {feedbackError && (
+          <div className="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm flex items-start gap-3">
+            <AlertTriangle className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
+            <div className="flex-1 font-medium">{feedbackError}</div>
+          </div>
+        )}
+
+        {feedbackSuccess && (
+          <div className="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm flex items-start gap-3">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+            <div className="flex-1 font-medium">{feedbackSuccess}</div>
+          </div>
+        )}
+
+        {/* Interactive Step Card */}
         <div className="bg-white border border-[#e2e8f0] rounded-2xl p-6 sm:p-10 shadow-xs relative overflow-hidden">
-          {!submittedRequest ? (
-            <form onSubmit={handleSubmit} className="space-y-6">
+          {/* STEP 1: Email and Deletion Reason Form */}
+          {step === 1 && (
+            <form onSubmit={handleRequestCode} className="space-y-6">
               <div>
                 <h2 className="text-xl sm:text-2xl font-bold text-[#0f172a]">
-                  Formulário Oficial de Solicitação de Exclusão
+                  Passo 1: Identificação da Conta KwanzaFlow
                 </h2>
                 <p className="text-xs sm:text-sm text-[#64748b] mt-1">
-                  Preencha o e-mail da sua conta Google associada ao KwanzaFlow. O nosso sistema iniciará o processo de purga dos seus registros nos servidores Google Cloud.
+                  Informe o e-mail cadastrado no aplicativo. Para garantir que terceiros não anulem a sua conta, enviaremos um código de segurança antes de autorizar a anulação.
                 </p>
               </div>
 
@@ -172,17 +388,20 @@ export function AccountDeletion() {
                 <label htmlFor="delete-email" className="block text-xs font-bold uppercase tracking-wider text-[#0f172a] mb-2">
                   E-mail da Conta Google Cadastrada <span className="text-rose-600">*</span>
                 </label>
-                <input
-                  id="delete-email"
-                  type="email"
-                  required
-                  placeholder="exemplo@gmail.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 rounded-[8px] border border-[#e2e8f0] text-[#0f172a] text-sm focus:outline-none focus:ring-2 focus:ring-[#10b981] focus:border-[#10b981] transition-all bg-[#f8fafc]"
-                />
-                <span className="text-[11px] text-[#64748b] mt-1 block">
-                  Informe exatamente o e-mail utilizado no login do aplicativo pelo Credential Manager.
+                <div className="relative">
+                  <input
+                    id="delete-email"
+                    type="email"
+                    required
+                    placeholder="exemplo@gmail.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full px-4 py-3 pl-11 rounded-[8px] border border-[#e2e8f0] text-[#0f172a] text-sm focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-all bg-[#f8fafc]"
+                  />
+                  <Mail className="w-4 h-4 text-[#64748b] absolute left-4 top-3.5" />
+                </div>
+                <span className="text-[11px] text-[#64748b] mt-1.5 block">
+                  O código de confirmação será enviado diretamente para este endereço de e-mail.
                 </span>
               </div>
 
@@ -212,7 +431,7 @@ export function AccountDeletion() {
                 </label>
                 <textarea
                   id="delete-notes"
-                  rows={3}
+                  rows={2}
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="Comentários sobre a sua experiência ou instruções específicas..."
@@ -220,7 +439,122 @@ export function AccountDeletion() {
                 />
               </div>
 
-              {/* Confirmation Checkbox */}
+              {/* Notice Box */}
+              <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600 leading-relaxed flex items-start gap-2.5">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                <span>
+                  Ao clicar em <strong>Enviar Código de Verificação</strong>, o KwanzaFlow gera um código numérico de segurança com validade de 10 minutos. Você só poderá efetivar a anulação da conta após digitar o código correto.
+                </span>
+              </div>
+
+              {/* Submit Button */}
+              <div className="pt-2">
+                <button
+                  type="submit"
+                  disabled={!email || isSendingCode}
+                  className={`w-full py-3.5 px-6 rounded-[8px] font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                    email && !isSendingCode
+                      ? 'bg-rose-600 hover:bg-rose-700 text-white shadow-md hover:shadow-rose-600/30'
+                      : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                  }`}
+                >
+                  {isSendingCode ? (
+                    <>
+                      <RefreshCw className="w-4 h-4 animate-spin" />
+                      <span>A enviar código de verificação...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>Enviar Código de Confirmação por E-mail</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          )}
+
+          {/* STEP 2: Verification Code Input and Final Submission */}
+          {step === 2 && (
+            <form onSubmit={handleVerifyAndSubmit} className="space-y-6">
+              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-bold text-[#0f172a]">
+                    Passo 2: Digite o Código de Segurança
+                  </h2>
+                  <p className="text-xs sm:text-sm text-[#64748b] mt-0.5">
+                    O código de 6 dígitos foi enviado para <strong>{email}</strong>
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setStep(1);
+                    setFeedbackError(null);
+                  }}
+                  className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-slate-800 font-semibold cursor-pointer"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Alterar e-mail</span>
+                </button>
+              </div>
+
+              {/* Preview Helper for local / dev testing */}
+              {previewCode && (
+                <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <KeyRound className="w-4 h-4 text-amber-700 flex-shrink-0" />
+                    <span>
+                      Código enviado: <strong className="font-mono text-sm tracking-wider">{previewCode}</strong>
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setVerificationCode(previewCode)}
+                    className="px-2.5 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded font-medium text-[11px] cursor-pointer"
+                  >
+                    Preencher Código
+                  </button>
+                </div>
+              )}
+
+              {/* 6-Digit Code Input */}
+              <div>
+                <label
+                  htmlFor="verify-code"
+                  className="block text-xs font-bold uppercase tracking-wider text-[#0f172a] mb-2"
+                >
+                  Código de Confirmação Recebido por E-mail <span className="text-rose-600">*</span>
+                </label>
+                <div className="relative max-w-sm">
+                  <input
+                    id="verify-code"
+                    type="text"
+                    maxLength={6}
+                    required
+                    autoFocus
+                    placeholder="Ex: 849201"
+                    value={verificationCode}
+                    onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
+                    className="w-full px-4 py-3.5 text-center tracking-[8px] font-mono text-xl font-bold rounded-[8px] border-2 border-slate-300 text-[#0f172a] focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-all bg-[#f8fafc]"
+                  />
+                </div>
+                <div className="flex items-center justify-between mt-2 text-xs text-[#64748b]">
+                  <span>Válido por 10 minutos</span>
+                  <button
+                    type="button"
+                    onClick={handleResendCode}
+                    disabled={resendCooldown > 0 || isSendingCode}
+                    className={`font-semibold cursor-pointer ${
+                      resendCooldown > 0 ? 'text-slate-400 cursor-not-allowed' : 'text-rose-600 hover:text-rose-700 underline'
+                    }`}
+                  >
+                    {resendCooldown > 0 ? `Reenviar em ${resendCooldown}s` : 'Não recebeu? Reenviar código'}
+                  </button>
+                </div>
+              </div>
+
+              {/* Declaration Checkbox */}
               <div className="p-4 bg-rose-50 rounded-xl border border-rose-200">
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input
@@ -229,32 +563,48 @@ export function AccountDeletion() {
                     onChange={(e) => setConfirmed(e.target.checked)}
                     className="w-4 h-4 mt-1 text-rose-600 rounded border-slate-300 focus:ring-rose-500 accent-rose-600 cursor-pointer"
                   />
-                  <span className="text-xs sm:text-sm text-rose-900 leading-relaxed font-medium">
-                    Declaro que sou o titular legítimo da conta indicada e compreendo que esta ação é <strong>definitiva e irreversível</strong>. Todos os orçamentos, saldo de Kixikilas e lançamentos serão permanentemente excluídos.
+                  <span className="text-xs sm:text-sm text-rose-950 leading-relaxed font-medium">
+                    Declaro que sou o titular legítimo do e-mail <strong>{email}</strong>, inseri o código de verificação recebido e confirmo a solicitação de <strong>exclusão definitiva e irreversível da minha conta KwanzaFlow</strong>. Estou ciente de que o pedido será enviado ao suporte (<strong>appkwanzaflow@gmail.com</strong>) para purga permanente.
                   </span>
                 </label>
               </div>
 
-              {/* Submit Button */}
-              <div className="pt-2">
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setStep(1)}
+                  className="w-full sm:w-auto px-5 py-3 rounded-[8px] border border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold text-xs sm:text-sm cursor-pointer"
+                >
+                  Voltar
+                </button>
                 <button
                   type="submit"
-                  disabled={!confirmed || !email || isSubmitting}
-                  className={`w-full py-3.5 px-6 rounded-[8px] font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-all cursor-pointer ${
-                    confirmed && email && !isSubmitting
+                  disabled={!confirmed || verificationCode.length < 4 || isVerifying}
+                  className={`flex-1 w-full py-3.5 px-6 rounded-[8px] font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                    confirmed && verificationCode.length >= 4 && !isVerifying
                       ? 'bg-rose-600 hover:bg-rose-700 text-white shadow-md hover:shadow-rose-600/30'
                       : 'bg-slate-200 text-slate-400 cursor-not-allowed'
                   }`}
                 >
-                  <Trash2 className="w-4 h-4" />
-                  <span>
-                    {isSubmitting ? 'Processando Solicitação...' : 'Solicitar Exclusão Imediata de Conta'}
-                  </span>
+                  {isVerifying ? (
+                    <>
+                      <RefreshCw className="w-4 h-4 animate-spin" />
+                      <span>Validando código e enviando pedido...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Trash2 className="w-4 h-4" />
+                      <span>Confirmar Titularidade e Solicitar Exclusão</span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>
-          ) : (
-            /* Instant Visual Feedback with Official Protocol */
+          )}
+
+          {/* STEP 3: Confirmed Request Screen with Official Protocol */}
+          {step === 3 && submittedRequest && (
             <div className="space-y-6 animate-in fade-in zoom-in-95 duration-200">
               <div className="w-16 h-16 rounded-2xl bg-emerald-50 text-[#10b981] flex items-center justify-center mx-auto border border-emerald-100">
                 <CheckCircle2 className="w-9 h-9" />
@@ -265,22 +615,55 @@ export function AccountDeletion() {
                   Solicitação de Exclusão Registada com Sucesso
                 </h3>
                 <p className="text-sm text-[#64748b] mt-2">
-                  O seu pedido foi processado na fila prioritária de conformidade Google Play e Firebase Firestore.
+                  A titularidade do seu e-mail foi confirmada por código de segurança e o pedido oficial foi encaminhado com sucesso.
                 </p>
+              </div>
+
+              {/* Status notifications dispatch box */}
+              <div className="max-w-lg mx-auto space-y-2.5">
+                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs flex items-center gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span>
+                    <strong>E-mail do Administrador Notificado:</strong> Pedido enviado para <strong>appkwanzaflow@gmail.com</strong>
+                  </span>
+                </div>
+                <div className="p-3 rounded-xl bg-blue-50 border border-blue-200 text-blue-900 text-xs flex items-center gap-2.5">
+                  <Mail className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                  <span>
+                    <strong>Confirmação Enviada ao Usuário:</strong> Mensagem de protocolo enviada para <strong>{submittedRequest.email}</strong>
+                  </span>
+                </div>
               </div>
 
               {/* Ticket Details Box */}
               <div className="bg-[#f8fafc] border border-[#e2e8f0] rounded-xl p-5 max-w-lg mx-auto space-y-3 text-xs sm:text-sm">
                 <div className="flex justify-between items-center pb-2 border-b border-[#e2e8f0]">
                   <span className="text-[#64748b] font-medium">Protocolo Oficial:</span>
-                  <span className="font-mono font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
-                    {submittedRequest.id}
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-mono font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
+                      {submittedRequest.id}
+                    </span>
+                    <button
+                      onClick={() => copyProtocolText(submittedRequest.id)}
+                      className="p-1 text-slate-500 hover:text-slate-800 rounded cursor-pointer"
+                      title="Copiar Protocolo"
+                    >
+                      {copiedProtocol ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                    </button>
+                  </div>
                 </div>
 
                 <div className="flex justify-between items-center pb-2 border-b border-[#e2e8f0]">
                   <span className="text-[#64748b] font-medium">E-mail Cadastrado:</span>
                   <span className="font-semibold text-[#0f172a]">{submittedRequest.email}</span>
+                </div>
+
+                <div className="flex justify-between items-center pb-2 border-b border-[#e2e8f0]">
+                  <span className="text-[#64748b] font-medium">Validação de Titularidade:</span>
+                  <span className="inline-flex items-center gap-1 text-[#10b981] font-bold">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    Código confirmado
+                  </span>
                 </div>
 
                 <div className="flex justify-between items-center pb-2 border-b border-[#e2e8f0]">
@@ -292,7 +675,7 @@ export function AccountDeletion() {
                   <span className="text-[#64748b] font-medium">Status no Firebase:</span>
                   <span className="inline-flex items-center gap-1 text-[#10b981] font-bold">
                     <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span>
-                    Em fila de purga automática
+                    Em processamento prioritário
                   </span>
                 </div>
 
@@ -303,8 +686,8 @@ export function AccountDeletion() {
               </div>
 
               {/* Instructions Callout */}
-              <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 max-w-lg mx-auto text-xs text-amber-900 leading-relaxed">
-                <strong>Próximos Passos:</strong> Uma mensagem de confirmação do protocolo foi encaminhada para <strong>{submittedRequest.email}</strong>. O seu perfil no Firebase Authentication será desativado em até 24 horas, e todos os documentos pessoais serão eliminados de forma definitiva.
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 max-w-lg mx-auto text-xs text-slate-700 leading-relaxed">
+                <strong>O que acontece a seguir:</strong> O seu perfil no Firebase Authentication será desativado e todos os registros financeiros e kixikilas vinculados ao seu usuário serão purgados de forma permanente nos servidores Google Cloud.
               </div>
 
               <div className="text-center pt-2">
@@ -312,7 +695,7 @@ export function AccountDeletion() {
                   onClick={handleReset}
                   className="text-xs font-bold text-[#64748b] hover:text-[#0f172a] underline cursor-pointer"
                 >
-                  Registrar outra solicitação ou fechar
+                  Registrar outra solicitação ou voltar ao início
                 </button>
               </div>
             </div>
@@ -322,3 +705,4 @@ export function AccountDeletion() {
     </section>
   );
 }
+

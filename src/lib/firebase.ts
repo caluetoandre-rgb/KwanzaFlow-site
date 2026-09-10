@@ -1,12 +1,20 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
-import { getFirestore, doc, getDocFromServer } from 'firebase/firestore';
+import { initializeFirestore, doc, getDocFromServer } from 'firebase/firestore';
 import firebaseConfig from '../../firebase-applet-config.json';
 
-const app = initializeApp(firebaseConfig);
+const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
-export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId || '(default)');
+
+// Initialize Firestore with long polling enabled to prevent streaming/proxy timeouts in containerized iframes
+export const db = initializeFirestore(
+  app,
+  {
+    experimentalForceLongPolling: true,
+  },
+  firebaseConfig.firestoreDatabaseId || '(default)'
+);
 
 // Test connection
 async function testConnection() {
