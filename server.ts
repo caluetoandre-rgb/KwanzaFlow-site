@@ -629,9 +629,16 @@ Luanda, Angola`;
   }
 });
 
+// Serve app-ads.txt explicitly with text/plain header
+app.get(['/app-ads.txt', '/App-ads.txt', '/app-ads.TXT', '/App-Ads.txt'], (req, res) => {
+  res.type('text/plain; charset=utf-8');
+  res.sendFile(path.join(process.cwd(), 'public', 'app-ads.txt'));
+});
+
 // Serve static files from Vite build output
 const distPath = path.join(process.cwd(), 'dist');
 app.use(express.static(distPath));
+app.use(express.static(path.join(process.cwd(), 'public')));
 
 app.get('*all', (req, res) => {
   res.sendFile(path.join(distPath, 'index.html'));
