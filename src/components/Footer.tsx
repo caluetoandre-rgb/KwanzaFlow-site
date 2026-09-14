@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { KwanzaLogo } from './KwanzaLogo';
-import { Mail, Copy, Check, ShieldCheck, FileText, UserX, Facebook } from 'lucide-react';
+import { Mail, Copy, Check, ShieldCheck, FileText, UserX, Facebook, BookOpen, ArrowDownToLine } from 'lucide-react';
 import { ActiveTab } from '../types';
 
 interface FooterProps {
@@ -39,6 +39,10 @@ export function Footer({ setActiveTab, onOpenDownloadModal }: FooterProps) {
                 <span>Portal Oficial: <strong className="text-white">kwanzaflow.online</strong></span>
               </div>
               <div className="flex items-center gap-2 text-slate-300">
+                <span className="text-slate-400">Âmbito:</span>
+                <span className="font-semibold text-white">Angola</span>
+              </div>
+              <div className="flex items-center gap-2 text-slate-300">
                 <span className="text-slate-400">Loja Google Play:</span>
                 <span className="font-semibold text-white">KwanzaFlow - Finanças & Gestão</span>
               </div>
@@ -68,6 +72,12 @@ export function Footer({ setActiveTab, onOpenDownloadModal }: FooterProps) {
                 </button>
               </li>
               <li>
+                <button onClick={() => handleNav('comosurgiu')} className="hover:text-[#10b981] transition-colors flex items-center gap-1.5 cursor-pointer text-emerald-400 font-medium">
+                  <BookOpen className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Como Surgiu (História)</span>
+                </button>
+              </li>
+              <li>
                 <button onClick={() => handleNav('recursos')} className="hover:text-[#10b981] transition-colors cursor-pointer">
                   Orçamento 50/30/20
                 </button>
@@ -76,6 +86,16 @@ export function Footer({ setActiveTab, onOpenDownloadModal }: FooterProps) {
                 <button onClick={() => handleNav('kixikila')} className="hover:text-[#10b981] transition-colors cursor-pointer">
                   Módulo Kixikila
                 </button>
+              </li>
+              <li>
+                <a
+                  href="/downloads/KwanzaFlow_Tecnologia_e_Cidadania_Financeira.pdf"
+                  download="KwanzaFlow_Tecnologia_e_Cidadania_Financeira.pdf"
+                  className="hover:text-[#10b981] transition-colors flex items-center gap-1.5 cursor-pointer text-slate-300"
+                >
+                  <ArrowDownToLine className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Documento Oficial (PDF)</span>
+                </a>
               </li>
               <li>
                 <button onClick={onOpenDownloadModal} className="hover:text-[#10b981] transition-colors cursor-pointer">
@@ -89,6 +109,15 @@ export function Footer({ setActiveTab, onOpenDownloadModal }: FooterProps) {
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-white">Privacidade e Segurança</h4>
             <ul className="space-y-2 text-xs">
+              <li>
+                <button
+                  onClick={() => handleNav('comosurgiu')}
+                  className="hover:text-[#10b981] transition-colors flex items-center gap-1.5 cursor-pointer"
+                >
+                  <FileText className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Génese e Princípios do Projeto</span>
+                </button>
+              </li>
               <li>
                 <button
                   onClick={() => handleNav('privacidade')}

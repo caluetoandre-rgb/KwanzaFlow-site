@@ -7,6 +7,7 @@ import { KixikilaSection } from './components/KixikilaSection';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { TermsOfUse } from './components/TermsOfUse';
 import { AccountDeletion } from './components/AccountDeletion';
+import { ComoSurgiuArticle } from './components/ComoSurgiuArticle';
 import { Footer } from './components/Footer';
 import { DownloadModal } from './components/DownloadModal';
 import { ActiveTab } from './types';
@@ -15,23 +16,42 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('inicio');
   const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
 
-  // Synchronize with URL hash on load and hashchange
+  // Synchronize with URL pathname and hash on load, popstate, and hashchange
   useEffect(() => {
-    const handleHash = () => {
-      const hash = window.location.hash.replace('#', '') as ActiveTab;
-      if (['inicio', 'recursos', 'kixikila', 'privacidade', 'termos', 'eliminar-conta'].includes(hash)) {
+    const handleUrlRoute = () => {
+      const pathname = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.replace('#', '').toLowerCase() as ActiveTab;
+
+      if (pathname === '/comosurgiu' || pathname === '/comosurgiu/' || hash === 'comosurgiu') {
+        setActiveTab('comosurgiu');
+      } else if (['inicio', 'recursos', 'kixikila', 'comosurgiu', 'privacidade', 'termos', 'eliminar-conta'].includes(hash)) {
         setActiveTab(hash);
+      } else if (pathname === '/' || pathname === '') {
+        // default tab
       }
     };
 
-    handleHash();
-    window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
+    handleUrlRoute();
+    window.addEventListener('hashchange', handleUrlRoute);
+    window.addEventListener('popstate', handleUrlRoute);
+    return () => {
+      window.removeEventListener('hashchange', handleUrlRoute);
+      window.removeEventListener('popstate', handleUrlRoute);
+    };
   }, []);
 
   const handleTabChange = (tab: ActiveTab) => {
     setActiveTab(tab);
-    window.location.hash = tab;
+    if (tab === 'comosurgiu') {
+      window.history.pushState(null, '', '/comosurgiu');
+      window.location.hash = 'comosurgiu';
+    } else if (tab === 'inicio') {
+      window.history.pushState(null, '', '/');
+      window.location.hash = '';
+    } else {
+      window.history.pushState(null, '', `/#${tab}`);
+      window.location.hash = tab;
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -93,6 +113,15 @@ export default function App() {
             <KixikilaSection
               onOpenDownloadModal={() => setIsDownloadModalOpen(true)}
               setActiveTab={handleTabChange}
+            />
+          </div>
+        )}
+
+        {activeTab === 'comosurgiu' && (
+          <div className="animate-in fade-in duration-200">
+            <ComoSurgiuArticle
+              setActiveTab={handleTabChange}
+              onOpenDownloadModal={() => setIsDownloadModalOpen(true)}
             />
           </div>
         )}

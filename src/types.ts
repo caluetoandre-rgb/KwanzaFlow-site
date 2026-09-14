@@ -1,4 +1,4 @@
-export type ActiveTab = 'inicio' | 'recursos' | 'kixikila' | 'privacidade' | 'termos' | 'eliminar-conta';
+export type ActiveTab = 'inicio' | 'recursos' | 'kixikila' | 'comosurgiu' | 'privacidade' | 'termos' | 'eliminar-conta';
 
 export interface DeletionRequest {
   id: string;

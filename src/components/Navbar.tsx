@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { KwanzaLogo } from './KwanzaLogo';
 import { ActiveTab } from '../types';
-import { Menu, X, Download, ShieldCheck, UserX, FileText, Sparkles, Facebook } from 'lucide-react';
+import { Menu, X, Download, ShieldCheck, UserX, FileText, Sparkles, Facebook, BookOpen } from 'lucide-react';
 
 interface NavbarProps {
   activeTab: ActiveTab;
@@ -16,6 +16,7 @@ export function Navbar({ activeTab, setActiveTab, onOpenDownloadModal }: NavbarP
     { id: 'inicio', label: 'Início' },
     { id: 'recursos', label: 'Recursos' },
     { id: 'kixikila', label: 'Kixikila' },
+    { id: 'comosurgiu', label: 'Como Surgiu', icon: BookOpen },
     { id: 'privacidade', label: 'Privacidade', icon: ShieldCheck },
     { id: 'termos', label: 'Termos', icon: FileText },
     { id: 'eliminar-conta', label: 'Eliminar Conta', icon: UserX, highlight: true },

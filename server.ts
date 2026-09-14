@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import fs from "fs";
 import nodemailer from "nodemailer";
 
 const app = express();
@@ -635,10 +636,58 @@ app.get(['/app-ads.txt', '/App-ads.txt', '/app-ads.TXT', '/App-Ads.txt'], (req, 
   res.sendFile(path.join(process.cwd(), 'public', 'app-ads.txt'));
 });
 
-// Serve static files from Vite build output
+// Direct download for the official Como Surgiu PDF
+app.get(['/comosurgiu/download', '/downloads/KwanzaFlow_Tecnologia_e_Cidadania_Financeira.pdf'], (req, res) => {
+  const filePath = path.join(process.cwd(), 'public', 'downloads', 'KwanzaFlow_Tecnologia_e_Cidadania_Financeira.pdf');
+  res.download(filePath, 'KwanzaFlow_Tecnologia_e_Cidadania_Financeira.pdf');
+});
+
+// View PDF in browser
+app.get(['/comosurgiu.pdf'], (req, res) => {
+  res.type('application/pdf');
+  res.sendFile(path.join(process.cwd(), 'public', 'comosurgiu.pdf'));
+});
+
+// Serve static files from Vite build output and public folder
 const distPath = path.join(process.cwd(), 'dist');
 app.use(express.static(distPath));
 app.use(express.static(path.join(process.cwd(), 'public')));
+
+// Specific SEO route for /comosurgiu
+app.get(['/comosurgiu', '/comosurgiu/'], (req, res) => {
+  const indexPath = fs.existsSync(path.join(distPath, 'index.html'))
+    ? path.join(distPath, 'index.html')
+    : path.join(process.cwd(), 'index.html');
+
+  try {
+    let html = fs.readFileSync(indexPath, 'utf8');
+    // Inject custom SEO title and Open Graph for this specific article URL
+    html = html.replace(
+      /<title>.*?<\/title>/,
+      '<title>Como Surgiu o KwanzaFlow: Tecnologia e Cidadania Financeira ao Alcance de Todos | Angola</title>'
+    );
+    html = html.replace(
+      /<link rel="canonical" href=".*?" \/>/,
+      '<link rel="canonical" href="https://kwanzaflow.online/comosurgiu" />'
+    );
+    html = html.replace(
+      /<meta property="og:url" content=".*?" \/>/,
+      '<meta property="og:url" content="https://kwanzaflow.online/comosurgiu" />'
+    );
+    html = html.replace(
+      /<meta property="og:title" content=".*?" \/>/,
+      '<meta property="og:title" content="Como Surgiu o KwanzaFlow: Tecnologia e Cidadania Financeira ao Alcance de Todos" />'
+    );
+    html = html.replace(
+      /<meta property="og:description" content=".*?" \/>/,
+      '<meta property="og:description" content="A génese e princípios de gestão consciente, orçamento familiar em Kwanzas e cidadania financeira do KwanzaFlow em Angola." />'
+    );
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.send(html);
+  } catch (e) {
+    res.sendFile(indexPath);
+  }
+});
 
 app.get('*all', (req, res) => {
   res.sendFile(path.join(distPath, 'index.html'));
