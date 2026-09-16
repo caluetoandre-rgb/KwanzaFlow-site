@@ -633,9 +633,17 @@ Luanda, Angola`;
   }
 });
 
+// Serve Google AdSense ads.txt explicitly with text/plain header
+app.get(['/ads.txt', '/Ads.txt', '/ADS.TXT', '/Ads.Txt'], (req, res) => {
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.setHeader('Cache-Control', 'public, max-age=3600');
+  res.sendFile(path.join(process.cwd(), 'public', 'ads.txt'));
+});
+
 // Serve app-ads.txt explicitly with text/plain header
 app.get(['/app-ads.txt', '/App-ads.txt', '/app-ads.TXT', '/App-Ads.txt'], (req, res) => {
-  res.type('text/plain; charset=utf-8');
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.setHeader('Cache-Control', 'public, max-age=3600');
   res.sendFile(path.join(process.cwd(), 'public', 'app-ads.txt'));
 });
 
