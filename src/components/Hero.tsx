@@ -1,4 +1,4 @@
-import { TrendingUp, ShieldCheck, Users, Store, ArrowRight, CheckCircle2, ChevronRight, PieChart, Sparkles } from 'lucide-react';
+import { TrendingUp, ShieldCheck, Users, Store, ArrowRight, CheckCircle2, ChevronRight, PieChart } from 'lucide-react';
 import { KwanzaLogo } from './KwanzaLogo';
 import { ActiveTab } from '../types';
 
@@ -161,10 +161,11 @@ export function Hero({ onExploreFeatures, onOpenDownloadModal, setActiveTab }: H
             <div className="hidden sm:flex absolute -bottom-4 -left-4 bg-white text-[#0f172a] p-3 rounded-xl shadow-md border border-[#e2e8f0] items-center gap-2.5">
               <ShieldCheck className="w-5 h-5 text-[#10b981]" />
               <div className="text-xs">
-                <div className="font-bold">KwanzaFlow - Finanças & Gestão</div>
-                <div className="text-[11px] text-[#64748b]">Google Play Store • com.kwanzaflow.aoa</div>
+                <div className="font-bold">KwanzaFlow: Finanças Pessoais</div>
+                <div className="text-[11px] text-[#64748b]">Google Play Store (v1.0.32) • com.kwanzaflow.aoa</div>
               </div>
             </div>
+
           </div>
         </div>
       </div>

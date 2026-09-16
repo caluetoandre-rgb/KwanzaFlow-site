@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap oficial KwanzaFlow
+Sitemap: https://kwanzaflow.online/sitemap.xml

@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import fs from "fs";
 import nodemailer from "nodemailer";
+import { allArticles, getArticleBySlug } from "./src/data/articles";
 
 const app = express();
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
@@ -200,7 +201,7 @@ CÓDIGO DE VERIFICAÇÃO: ${code}
 • Se você não solicitou a exclusão, ignore este e-mail. A sua conta permanecerá segura e ativa.
 
 Atenciosamente,
-Equipa KwanzaFlow Angola
+Equipa KwanzaFlow
 Suporte: appkwanzaflow@gmail.com
 Luanda, Angola`;
 
@@ -270,13 +271,14 @@ Luanda, Angola`;
                 <tr>
                   <td style="padding: 20px 32px; background-color: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 12px; color: #94a3b8; line-height: 1.5;">
                     <p style="margin: 0 0 4px 0;">
-                      <strong>KwanzaFlow Angola</strong> • Aplicativo de Finanças Pessoais e Kixikila
+                      <strong>KwanzaFlow</strong> • Aplicativo de Finanças Pessoais e Kixikila
                     </p>
                     <p style="margin: 0;">
                       Este é um e-mail transacional de segurança enviado para ${cleanEmail}. Suporte: <a href="mailto:appkwanzaflow@gmail.com" style="color: #0284c7; text-decoration: none;">appkwanzaflow@gmail.com</a>
                     </p>
                   </td>
                 </tr>
+
               </table>
             </td>
           </tr>
@@ -514,7 +516,7 @@ O seu acesso ao aplicativo será desativado e os registros vinculados serão eli
 Se você tiver alguma dúvida ou precisar de assistência, basta responder diretamente a este e-mail ou escrever para ${ADMIN_EMAIL}.
 
 Atenciosamente,
-Equipa de Atendimento KwanzaFlow Angola
+Equipa de Atendimento KwanzaFlow
 Luanda, Angola`;
 
     const userHtml = `
@@ -591,13 +593,14 @@ Luanda, Angola`;
                 <tr>
                   <td style="padding: 20px 32px; background-color: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 12px; color: #94a3b8; line-height: 1.5;">
                     <p style="margin: 0 0 4px 0;">
-                      <strong>KwanzaFlow Angola</strong> • Aplicativo de Finanças Pessoais e Kixikila
+                      <strong>KwanzaFlow</strong> • Aplicativo de Finanças Pessoais e Kixikila
                     </p>
                     <p style="margin: 0;">
                       E-mail transacional de segurança enviado para ${cleanEmail}. Atendimento: <a href="mailto:${ADMIN_EMAIL}" style="color: #0284c7; text-decoration: none;">${ADMIN_EMAIL}</a>
                     </p>
                   </td>
                 </tr>
+
               </table>
             </td>
           </tr>
@@ -653,35 +656,317 @@ const distPath = path.join(process.cwd(), 'dist');
 app.use(express.static(distPath));
 app.use(express.static(path.join(process.cwd(), 'public')));
 
-// Specific SEO route for /comosurgiu
-app.get(['/comosurgiu', '/comosurgiu/'], (req, res) => {
+// Specific SEO route for /sobre-nos and /comosurgiu
+app.get(['/sobre-nos', '/sobre-nos/', '/comosurgiu', '/comosurgiu/'], (req, res) => {
   const indexPath = fs.existsSync(path.join(distPath, 'index.html'))
     ? path.join(distPath, 'index.html')
     : path.join(process.cwd(), 'index.html');
 
   try {
     let html = fs.readFileSync(indexPath, 'utf8');
-    // Inject custom SEO title and Open Graph for this specific article URL
+    // Inject custom SEO title and Open Graph for Sobre Nós
     html = html.replace(
       /<title>.*?<\/title>/,
-      '<title>Como Surgiu o KwanzaFlow: Tecnologia e Cidadania Financeira ao Alcance de Todos | Angola</title>'
+      '<title>Sobre Nós - Génese e Princípios do KwanzaFlow | Tecnologia e Cidadania Financeira em Angola</title>'
     );
     html = html.replace(
       /<link rel="canonical" href=".*?" \/>/,
-      '<link rel="canonical" href="https://kwanzaflow.online/comosurgiu" />'
+      '<link rel="canonical" href="https://kwanzaflow.online/sobre-nos" />'
     );
     html = html.replace(
       /<meta property="og:url" content=".*?" \/>/,
-      '<meta property="og:url" content="https://kwanzaflow.online/comosurgiu" />'
+      '<meta property="og:url" content="https://kwanzaflow.online/sobre-nos" />'
     );
     html = html.replace(
       /<meta property="og:title" content=".*?" \/>/,
-      '<meta property="og:title" content="Como Surgiu o KwanzaFlow: Tecnologia e Cidadania Financeira ao Alcance de Todos" />'
+      '<meta property="og:title" content="Sobre Nós: Génese e Princípios do KwanzaFlow" />'
     );
     html = html.replace(
       /<meta property="og:description" content=".*?" \/>/,
-      '<meta property="og:description" content="A génese e princípios de gestão consciente, orçamento familiar em Kwanzas e cidadania financeira do KwanzaFlow em Angola." />'
+      '<meta property="og:description" content="Sobre Nós: A génese e princípios de gestão consciente, orçamento familiar em Kwanzas e cidadania financeira do KwanzaFlow em Angola." />'
     );
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.send(html);
+  } catch (e) {
+    res.sendFile(indexPath);
+  }
+});
+
+// Robots.txt explicit handler
+app.get('/robots.txt', (req, res) => {
+  const robotsPath = fs.existsSync(path.join(distPath, 'robots.txt'))
+    ? path.join(distPath, 'robots.txt')
+    : path.join(process.cwd(), 'public', 'robots.txt');
+
+  if (fs.existsSync(robotsPath)) {
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.sendFile(robotsPath);
+  } else {
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.send("User-agent: *\nAllow: /\n\nSitemap: https://kwanzaflow.online/sitemap.xml\n");
+  }
+});
+
+// Sitemap.xml explicit handler
+app.get('/sitemap.xml', (req, res) => {
+  const sitemapPath = fs.existsSync(path.join(distPath, 'sitemap.xml'))
+    ? path.join(distPath, 'sitemap.xml')
+    : path.join(process.cwd(), 'public', 'sitemap.xml');
+
+  if (fs.existsSync(sitemapPath)) {
+    res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+    res.sendFile(sitemapPath);
+  } else {
+    // Generate fallback sitemap on the fly
+    const articleUrls = allArticles.map((art) => `
+  <url>
+    <loc>https://kwanzaflow.online/artigos/${art.slug}</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>`).join('');
+
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://kwanzaflow.online/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://kwanzaflow.online/artigos</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>${articleUrls}
+  <url>
+    <loc>https://kwanzaflow.online/sobre-nos</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://kwanzaflow.online/comosurgiu</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset>`;
+    res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+    res.send(xml);
+  }
+});
+
+// SEO handler for /artigos and individual article pages /artigos/:slug
+app.get(['/artigos', '/artigos/', '/artigos/:slug'], (req, res) => {
+  const indexPath = fs.existsSync(path.join(distPath, 'index.html'))
+    ? path.join(distPath, 'index.html')
+    : path.join(process.cwd(), 'index.html');
+
+  const slug = req.params.slug;
+  const article = slug ? getArticleBySlug(slug) : null;
+
+  try {
+    let html = fs.readFileSync(indexPath, 'utf8');
+
+    if (article) {
+      // Individual Article SEO
+      const pageTitle = `${article.title} | KwanzaFlow`;
+      const pageDescription = article.summary.length > 160 ? article.summary.substring(0, 157) + '...' : article.summary;
+      const pageUrl = `https://kwanzaflow.online/artigos/${article.slug}`;
+      const pageKeywords = `${article.tags.join(', ')}, finanças pessoais Angola, economia Angola, KwanzaFlow`;
+
+      // 1. Meta Tags & OpenGraph
+      html = html.replace(/<title>.*?<\/title>/, `<title>${pageTitle}</title>`);
+      html = html.replace(/<link rel="canonical" href=".*?" \/>/, `<link rel="canonical" href="${pageUrl}" />`);
+      html = html.replace(/<meta name="description" content=".*?" \/>/, `<meta name="description" content="${pageDescription}" />`);
+      html = html.replace(/<meta name="keywords" content=".*?" \/>/, `<meta name="keywords" content="${pageKeywords}" />`);
+      html = html.replace(/<meta property="og:url" content=".*?" \/>/, `<meta property="og:url" content="${pageUrl}" />`);
+      html = html.replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${pageTitle}" />`);
+      html = html.replace(/<meta property="og:description" content=".*?" \/>/, `<meta property="og:description" content="${pageDescription}" />`);
+      html = html.replace(/<meta property="og:type" content=".*?" \/>/, `<meta property="og:type" content="article" />`);
+
+      // 2. Structured Data: Article, FAQPage and BreadcrumbList (JSON-LD)
+      const articleSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        'mainEntityOfPage': {
+          '@type': 'WebPage',
+          '@id': pageUrl,
+        },
+        'headline': article.title,
+        'description': article.summary,
+        'image': 'https://kwanzaflow.online/logo.svg',
+        'inLanguage': 'pt-AO',
+        'datePublished': article.datePublished,
+        'dateModified': '2026-09-16',
+        'publisher': {
+          '@type': 'Organization',
+          'name': 'KwanzaFlow',
+          'url': 'https://kwanzaflow.online',
+          'logo': {
+            '@type': 'ImageObject',
+            'url': 'https://kwanzaflow.online/logo.svg',
+          },
+        },
+        'articleSection': article.category,
+        'keywords': article.tags.join(', '),
+        'wordCount': article.wordCount,
+      };
+
+      const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        'mainEntity': article.faqs.map((faq) => ({
+          '@type': 'Question',
+          'name': faq.question,
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': faq.answer,
+          },
+        })),
+      };
+
+      const breadcrumbSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          {
+            '@type': 'ListItem',
+            'position': 1,
+            'name': 'Início',
+            'item': 'https://kwanzaflow.online/',
+          },
+          {
+            '@type': 'ListItem',
+            'position': 2,
+            'name': 'Artigos',
+            'item': 'https://kwanzaflow.online/artigos',
+          },
+          {
+            '@type': 'ListItem',
+            'position': 3,
+            'name': article.title,
+            'item': pageUrl,
+          },
+        ],
+      };
+
+      const jsonLdScripts = `
+    <!-- Schema.org JSON-LD for Google & Search Engines -->
+    <script type="application/ld+json">${JSON.stringify(articleSchema)}</script>
+    <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>
+    <script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>
+    <meta property="article:published_time" content="${article.datePublished}" />
+    <meta property="article:section" content="${article.category}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${pageTitle}" />
+    <meta name="twitter:description" content="${pageDescription}" />
+    <meta name="twitter:image" content="https://kwanzaflow.online/logo.svg" />`;
+
+      html = html.replace('</head>', `${jsonLdScripts}\n  </head>`);
+
+      // 3. Pre-rendered Crawler-Friendly Semantic Markup (Read by search engine spiders before JS evaluation)
+      const crawlerSectionsHtml = article.sections
+        .map(
+          (s) => `
+        <section>
+          <h2>${s.heading}</h2>
+          ${s.subheading ? `<h3>${s.subheading}</h3>` : ''}
+          ${s.paragraphs.map((p) => `<p>${p}</p>`).join('\n')}
+        </section>`
+        )
+        .join('\n');
+
+      const crawlerFaqsHtml = article.faqs
+        .map(
+          (f) => `
+        <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 itemprop="name">${f.question}</h3>
+          <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">${f.answer}</p>
+          </div>
+        </div>`
+        )
+        .join('\n');
+
+      const crawlerContent = `
+    <!-- Semantic crawler content indexed by search engine spiders -->
+    <div id="seo-crawler-content" style="display:none;" aria-hidden="true">
+      <article>
+        <h1>${article.title}</h1>
+        <p><strong>${article.subtitle}</strong></p>
+        <p><em>${article.summary}</em></p>
+        <div>
+          <h2>Principais Conclusões</h2>
+          <ul>
+            ${article.keyTakeaways.map((t) => `<li>${t}</li>`).join('\n')}
+          </ul>
+        </div>
+        ${crawlerSectionsHtml}
+        <section>
+          <h2>Perguntas Frequentes (FAQ)</h2>
+          ${crawlerFaqsHtml}
+        </section>
+      </article>
+    </div>`;
+
+      html = html.replace('<div id="root">', `${crawlerContent}\n    <div id="root">`);
+    } else {
+      // Articles Hub Page SEO (/artigos)
+      const hubTitle = '20 Artigos de Finanças Pessoais, Orçamento & Emprego Informal em Angola | KwanzaFlow';
+      const hubDescription = 'Biblioteca completa de 20 artigos sobre finanças diárias em Angola: rendimentos informais, kixikila, compras grossistas, kupapatas, despesas invisíveis e orçamento em Kwanzas.';
+      const hubUrl = 'https://kwanzaflow.online/artigos';
+
+      html = html.replace(/<title>.*?<\/title>/, `<title>${hubTitle}</title>`);
+      html = html.replace(/<link rel="canonical" href=".*?" \/>/, `<link rel="canonical" href="${hubUrl}" />`);
+      html = html.replace(/<meta name="description" content=".*?" \/>/, `<meta name="description" content="${hubDescription}" />`);
+      html = html.replace(/<meta property="og:url" content=".*?" \/>/, `<meta property="og:url" content="${hubUrl}" />`);
+      html = html.replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${hubTitle}" />`);
+      html = html.replace(/<meta property="og:description" content=".*?" \/>/, `<meta property="og:description" content="${hubDescription}" />`);
+
+      const collectionSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        'name': hubTitle,
+        'description': hubDescription,
+        'url': hubUrl,
+        'hasPart': allArticles.map((art) => ({
+          '@type': 'Article',
+          'headline': art.title,
+          'url': `https://kwanzaflow.online/artigos/${art.slug}`,
+          'datePublished': art.datePublished,
+        })),
+      };
+
+      const breadcrumbHubSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          {
+            '@type': 'ListItem',
+            'position': 1,
+            'name': 'Início',
+            'item': 'https://kwanzaflow.online/',
+          },
+          {
+            '@type': 'ListItem',
+            'position': 2,
+            'name': 'Artigos',
+            'item': hubUrl,
+          },
+        ],
+      };
+
+      const hubJsonLd = `
+    <!-- Schema.org CollectionPage & BreadcrumbList -->
+    <script type="application/ld+json">${JSON.stringify(collectionSchema)}</script>
+    <script type="application/ld+json">${JSON.stringify(breadcrumbHubSchema)}</script>`;
+
+      html = html.replace('</head>', `${hubJsonLd}\n  </head>`);
+    }
+
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.send(html);
   } catch (e) {

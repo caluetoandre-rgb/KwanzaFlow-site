@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, TouchEvent } from 'react';
-import { ChevronLeft, ChevronRight, Play, Pause, Maximize2, X, Download, ShieldCheck, Sparkles } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Pause, Maximize2, X, Download, ShieldCheck, Smartphone } from 'lucide-react';
 import { ActiveTab } from '../types';
 
 interface BannerCarouselProps {
@@ -155,9 +155,10 @@ export function BannerCarousel({ onOpenDownloadModal, setActiveTab }: BannerCaro
         <div className="flex items-center justify-between gap-3 mb-3">
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+              <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
               <span>Destaques da Google Play Store</span>
             </span>
+
             <span className="text-xs text-slate-400 hidden sm:inline">
               Versão 20 • 100% Alta Resolução
             </span>

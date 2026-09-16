@@ -8,24 +8,41 @@ import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { TermsOfUse } from './components/TermsOfUse';
 import { AccountDeletion } from './components/AccountDeletion';
 import { ComoSurgiuArticle } from './components/ComoSurgiuArticle';
+import { ArticlesPage } from './components/ArticlesPage';
 import { Footer } from './components/Footer';
 import { DownloadModal } from './components/DownloadModal';
 import { ActiveTab } from './types';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('inicio');
+  const [articleSlug, setArticleSlug] = useState<string | null>(null);
   const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
 
   // Synchronize with URL pathname and hash on load, popstate, and hashchange
   useEffect(() => {
     const handleUrlRoute = () => {
       const pathname = window.location.pathname.toLowerCase();
-      const hash = window.location.hash.replace('#', '').toLowerCase() as ActiveTab;
+      const rawHash = window.location.hash.replace('#', '').toLowerCase();
 
-      if (pathname === '/comosurgiu' || pathname === '/comosurgiu/' || hash === 'comosurgiu') {
-        setActiveTab('comosurgiu');
-      } else if (['inicio', 'recursos', 'kixikila', 'comosurgiu', 'privacidade', 'termos', 'eliminar-conta'].includes(hash)) {
-        setActiveTab(hash);
+      if (
+        pathname === '/sobre-nos' ||
+        pathname === '/sobre-nos/' ||
+        rawHash === 'sobre-nos' ||
+        pathname === '/comosurgiu' ||
+        pathname === '/comosurgiu/' ||
+        rawHash === 'comosurgiu'
+      ) {
+        setActiveTab('sobre-nos');
+        setArticleSlug(null);
+      } else if (pathname.startsWith('/artigos') || rawHash.startsWith('artigos')) {
+        setActiveTab('artigos');
+        const parts = pathname.replace('/artigos', '').replace(/^\//, '').split('/');
+        const hashParts = rawHash.replace('artigos', '').replace(/^\//, '').split('/');
+        const slug = parts[0] || hashParts[0] || null;
+        setArticleSlug(slug);
+      } else if (['inicio', 'recursos', 'kixikila', 'privacidade', 'termos', 'eliminar-conta'].includes(rawHash)) {
+        setActiveTab(rawHash as ActiveTab);
+        setArticleSlug(null);
       } else if (pathname === '/' || pathname === '') {
         // default tab
       }
@@ -42,18 +59,26 @@ export default function App() {
 
   const handleTabChange = (tab: ActiveTab) => {
     setActiveTab(tab);
-    if (tab === 'comosurgiu') {
-      window.history.pushState(null, '', '/comosurgiu');
-      window.location.hash = 'comosurgiu';
+    if (tab === 'sobre-nos' || tab === 'comosurgiu') {
+      window.history.pushState(null, '', '/sobre-nos');
+      window.location.hash = 'sobre-nos';
+      setArticleSlug(null);
+    } else if (tab === 'artigos') {
+      window.history.pushState(null, '', '/artigos');
+      window.location.hash = 'artigos';
+      setArticleSlug(null);
     } else if (tab === 'inicio') {
       window.history.pushState(null, '', '/');
       window.location.hash = '';
+      setArticleSlug(null);
     } else {
       window.history.pushState(null, '', `/#${tab}`);
       window.location.hash = tab;
+      setArticleSlug(null);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f8fafc] text-[#1e293b] font-sans selection:bg-[#10b981] selection:text-white">
@@ -117,9 +142,20 @@ export default function App() {
           </div>
         )}
 
-        {activeTab === 'comosurgiu' && (
+        {(activeTab === 'sobre-nos' || activeTab === 'comosurgiu') && (
           <div className="animate-in fade-in duration-200">
             <ComoSurgiuArticle
+              setActiveTab={handleTabChange}
+              onOpenDownloadModal={() => setIsDownloadModalOpen(true)}
+            />
+          </div>
+        )}
+
+
+        {activeTab === 'artigos' && (
+          <div className="animate-in fade-in duration-200">
+            <ArticlesPage
+              initialSlug={articleSlug}
               setActiveTab={handleTabChange}
               onOpenDownloadModal={() => setIsDownloadModalOpen(true)}
             />

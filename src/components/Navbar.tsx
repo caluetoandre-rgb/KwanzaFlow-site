@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { KwanzaLogo } from './KwanzaLogo';
 import { ActiveTab } from '../types';
-import { Menu, X, Download, ShieldCheck, UserX, FileText, Sparkles, Facebook, BookOpen } from 'lucide-react';
+import { Menu, X, Download, ShieldCheck, UserX, FileText, Facebook, BookOpen, LucideIcon } from 'lucide-react';
 
 interface NavbarProps {
   activeTab: ActiveTab;
@@ -12,15 +12,17 @@ interface NavbarProps {
 export function Navbar({ activeTab, setActiveTab, onOpenDownloadModal }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navItems: { id: ActiveTab; label: string; icon?: typeof Sparkles; highlight?: boolean }[] = [
+  const navItems: { id: ActiveTab; label: string; icon?: LucideIcon; highlight?: boolean }[] = [
     { id: 'inicio', label: 'Início' },
     { id: 'recursos', label: 'Recursos' },
     { id: 'kixikila', label: 'Kixikila' },
-    { id: 'comosurgiu', label: 'Como Surgiu', icon: BookOpen },
+    { id: 'artigos', label: 'Artigos', icon: BookOpen },
+    { id: 'sobre-nos', label: 'Sobre Nós' },
     { id: 'privacidade', label: 'Privacidade', icon: ShieldCheck },
     { id: 'termos', label: 'Termos', icon: FileText },
     { id: 'eliminar-conta', label: 'Eliminar Conta', icon: UserX, highlight: true },
   ];
+
 
   const handleNavClick = (tab: ActiveTab) => {
     setActiveTab(tab);
@@ -44,8 +46,9 @@ export function Navbar({ activeTab, setActiveTab, onOpenDownloadModal }: NavbarP
           {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center gap-6">
             {navItems.map((item) => {
-              const isActive = activeTab === item.id;
+              const isActive = activeTab === item.id || (item.id === 'sobre-nos' && activeTab === 'comosurgiu');
               const Icon = item.icon;
+
               return (
                 <button
                   key={item.id}
@@ -122,8 +125,9 @@ export function Navbar({ activeTab, setActiveTab, onOpenDownloadModal }: NavbarP
             Menu de Navegação
           </div>
           {navItems.map((item) => {
-            const isActive = activeTab === item.id;
+            const isActive = activeTab === item.id || (item.id === 'sobre-nos' && activeTab === 'comosurgiu');
             const Icon = item.icon;
+
             return (
               <button
                 key={item.id}

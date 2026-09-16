@@ -1,5 +1,5 @@
 {
-  "name": "KwanzaFlow - Finanças Pessoais e Orçamento Familiar",
+  "name": "KwanzaFlow: Finanças Pessoais",
   "description": "Aplicativo de finanças pessoais, Kixikila comunitária e gestão de micro-negócios em Angola. Focado em orçamento familiar e planeamento em Kwanzas.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

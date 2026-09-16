@@ -44,7 +44,7 @@ export function Footer({ setActiveTab, onOpenDownloadModal }: FooterProps) {
               </div>
               <div className="flex items-center gap-2 text-slate-300">
                 <span className="text-slate-400">Loja Google Play:</span>
-                <span className="font-semibold text-white">KwanzaFlow - Finanças & Gestão</span>
+                <span className="font-semibold text-white">KwanzaFlow: Finanças Pessoais</span>
               </div>
             </div>
 
@@ -72,9 +72,15 @@ export function Footer({ setActiveTab, onOpenDownloadModal }: FooterProps) {
                 </button>
               </li>
               <li>
-                <button onClick={() => handleNav('comosurgiu')} className="hover:text-[#10b981] transition-colors flex items-center gap-1.5 cursor-pointer text-emerald-400 font-medium">
+                <button onClick={() => handleNav('artigos')} className="hover:text-[#10b981] transition-colors flex items-center gap-1.5 cursor-pointer text-emerald-400 font-bold">
                   <BookOpen className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Como Surgiu (História)</span>
+                  <span>20 Artigos Educativos</span>
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleNav('sobre-nos')} className="hover:text-[#10b981] transition-colors flex items-center gap-1.5 cursor-pointer text-slate-300">
+                  <BookOpen className="w-3.5 h-3.5 text-slate-400" />
+                  <span>Sobre Nós</span>
                 </button>
               </li>
               <li>
@@ -111,13 +117,14 @@ export function Footer({ setActiveTab, onOpenDownloadModal }: FooterProps) {
             <ul className="space-y-2 text-xs">
               <li>
                 <button
-                  onClick={() => handleNav('comosurgiu')}
+                  onClick={() => handleNav('sobre-nos')}
                   className="hover:text-[#10b981] transition-colors flex items-center gap-1.5 cursor-pointer"
                 >
                   <FileText className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Génese e Princípios do Projeto</span>
+                  <span>Sobre Nós: Génese e Princípios</span>
                 </button>
               </li>
+
               <li>
                 <button
                   onClick={() => handleNav('privacidade')}

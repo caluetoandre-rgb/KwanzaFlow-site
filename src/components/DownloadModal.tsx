@@ -1,4 +1,4 @@
-import { X, Check, ShieldCheck, Smartphone, Download, Star, Facebook } from 'lucide-react';
+import { X, Check, ShieldCheck, Smartphone, Download, Facebook } from 'lucide-react';
 import { KwanzaLogo } from './KwanzaLogo';
 
 interface DownloadModalProps {
@@ -37,7 +37,7 @@ export function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
         <div className="bg-[#f8fafc] border border-[#e2e8f0] rounded-xl p-4 mb-6 space-y-2.5 text-xs sm:text-sm">
           <div className="flex justify-between items-center">
             <span className="text-[#64748b]">Nome na Loja Google:</span>
-            <span className="font-bold text-[#0f172a]">KwanzaFlow - Finanças & Gestão</span>
+            <span className="font-bold text-[#0f172a]">KwanzaFlow: Finanças Pessoais</span>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-[#64748b]">Identificador (Package):</span>
@@ -47,7 +47,7 @@ export function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
           </div>
           <div className="flex justify-between items-center">
             <span className="text-[#64748b]">Versão:</span>
-            <span className="text-[#0f172a] font-semibold">1.0.4 (Build 2026.01)</span>
+            <span className="text-[#0f172a] font-semibold">1.0.32 (Build Oficial)</span>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-[#64748b]">Requisitos Mínimos:</span>
@@ -55,7 +55,7 @@ export function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
           </div>
           <div className="flex justify-between items-center">
             <span className="text-[#64748b]">Classificação:</span>
-            <span className="text-[#0f172a] font-medium">Livre / Finanças & Gestão</span>
+            <span className="text-[#0f172a] font-medium">Livre / Finanças Pessoais</span>
           </div>
         </div>
 
@@ -73,9 +73,10 @@ export function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
             </svg>
             <div className="text-left leading-tight">
               <div className="text-[11px] uppercase tracking-wider text-slate-400">Instalar na Play Store</div>
-              <div className="text-base font-black">KwanzaFlow - Finanças & Gestão</div>
+              <div className="text-base font-black">KwanzaFlow: Finanças Pessoais</div>
             </div>
           </a>
+
 
           <p className="text-[11px] text-center text-[#64748b]">
             Gratuito • Sem taxas ocultas • Sincronização segura via Firebase

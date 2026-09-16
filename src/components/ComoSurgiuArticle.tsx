@@ -9,7 +9,7 @@ import {
   BookOpen, 
   HeartHandshake, 
   ShieldCheck, 
-  Sparkles, 
+  TrendingUp, 
   MapPin, 
   User, 
   Calendar, 
@@ -39,14 +39,14 @@ export function ComoSurgiuArticle({ setActiveTab, onOpenDownloadModal }: ComoSur
   const [copiedLink, setCopiedLink] = useState(false);
   const [activeHeading, setActiveHeading] = useState('genese');
 
-  const articleUrl = 'https://kwanzaflow.online/comosurgiu';
+  const articleUrl = 'https://kwanzaflow.online/sobre-nos';
   const pdfDownloadUrl = '/downloads/KwanzaFlow_Tecnologia_e_Cidadania_Financeira.pdf';
   const pdfViewUrl = '/comosurgiu.pdf';
 
   useEffect(() => {
     // Dynamic SEO Title and Meta update for Google crawlers and user browser tabs
     const previousTitle = document.title;
-    document.title = 'Como Surgiu o KwanzaFlow: Tecnologia e Cidadania Financeira ao Alcance de Todos | Angola';
+    document.title = 'Sobre Nós - Génese e Princípios do KwanzaFlow | Tecnologia e Cidadania Financeira';
 
     // Update canonical or meta if present
     let metaDesc = document.querySelector('meta[name="description"]');
@@ -54,9 +54,10 @@ export function ComoSurgiuArticle({ setActiveTab, onOpenDownloadModal }: ComoSur
     if (metaDesc) {
       metaDesc.setAttribute(
         'content',
-        'Conheça a génese do KwanzaFlow: princípios de gestão consciente, orçamento familiar em Kwanzas, Kixikila digital e cidadania financeira em Angola.'
+        'Sobre Nós: Conheça a génese do KwanzaFlow, princípios de gestão consciente, orçamento familiar em Kwanzas, Kixikila digital e cidadania financeira em Angola.'
       );
     }
+
 
     return () => {
       document.title = previousTitle;
@@ -95,18 +96,18 @@ export function ComoSurgiuArticle({ setActiveTab, onOpenDownloadModal }: ComoSur
             '@graph': [
               {
                 '@type': 'Article',
-                '@id': 'https://kwanzaflow.online/comosurgiu#article',
+                '@id': 'https://kwanzaflow.online/sobre-nos#article',
                 isPartOf: {
                   '@type': 'WebSite',
                   '@id': 'https://kwanzaflow.online/#website',
-                  name: 'KwanzaFlow Angola',
+                  name: 'KwanzaFlow',
                   url: 'https://kwanzaflow.online',
                 },
                 headline: 'KwanzaFlow: Tecnologia e Cidadania Financeira ao Alcance de Todos',
                 description:
-                  'Génese, princípios norteadores de responsabilidade e história do projeto KwanzaFlow em Angola.',
+                  'Sobre Nós: Génese, princípios norteadores de responsabilidade e história do projeto KwanzaFlow em Angola.',
                 inLanguage: 'pt-AO',
-                mainEntityOfPage: 'https://kwanzaflow.online/comosurgiu',
+                mainEntityOfPage: 'https://kwanzaflow.online/sobre-nos',
                 datePublished: '2026-09-14T08:00:00+01:00',
                 dateModified: '2026-09-14T10:00:00+01:00',
                 author: {
@@ -126,6 +127,7 @@ export function ComoSurgiuArticle({ setActiveTab, onOpenDownloadModal }: ComoSur
                 articleSection: 'Finanças Pessoais, Gestão Orçamental e Cidadania',
                 keywords: [
                   'KwanzaFlow',
+                  'Sobre Nós KwanzaFlow',
                   'Como surgiu o KwanzaFlow',
                   'Educação financeira Angola',
                   'Gestão Consciente',
@@ -147,11 +149,12 @@ export function ComoSurgiuArticle({ setActiveTab, onOpenDownloadModal }: ComoSur
                   {
                     '@type': 'ListItem',
                     position: 2,
-                    name: 'Como Surgiu o KwanzaFlow',
-                    item: 'https://kwanzaflow.online/comosurgiu',
+                    name: 'Sobre Nós',
+                    item: 'https://kwanzaflow.online/sobre-nos',
                   },
                 ],
               },
+
               {
                 '@type': 'FAQPage',
                 mainEntity: [
@@ -215,9 +218,10 @@ export function ComoSurgiuArticle({ setActiveTab, onOpenDownloadModal }: ComoSur
           <span className="text-slate-700 font-semibold">Institucional</span>
           <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
           <span className="text-[#10b981] font-bold" aria-current="page">
-            Como Surgiu o KwanzaFlow
+            Sobre Nós
           </span>
         </nav>
+
 
         {/* Quick Actions Bar (Download PDF, Print, Share) */}
         <div className="mb-6 bg-white border border-slate-200/80 rounded-xl p-3 sm:p-4 shadow-xs flex flex-wrap items-center justify-between gap-3">
@@ -291,7 +295,7 @@ export function ComoSurgiuArticle({ setActiveTab, onOpenDownloadModal }: ComoSur
 
             {/* Category Tag */}
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-[#eab308] text-[#0f172a] text-[11px] font-black uppercase tracking-wider mb-4 shadow-xs">
-              <Sparkles className="w-3 h-3 text-[#0f172a]" />
+              <ShieldCheck className="w-3 h-3 text-[#0f172a]" />
               <span>Iniciativa & Cidadania Financeira</span>
             </div>
 
@@ -310,10 +314,12 @@ export function ComoSurgiuArticle({ setActiveTab, onOpenDownloadModal }: ComoSur
               <div className="flex items-center gap-2">
                 <span className="text-slate-400">Iniciativa:</span>
                 <span className="font-bold text-white flex items-center gap-1">
-                  <Sparkles className="w-3.5 h-3.5 text-[#10b981]" />
-                  KwanzaFlow Angola
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#10b981]" />
+                  KwanzaFlow
                 </span>
               </div>
+
+
 
               <div className="flex items-center gap-1.5 text-slate-200">
                 <Globe2 className="w-3.5 h-3.5 text-amber-400" />
@@ -465,7 +471,7 @@ export function ComoSurgiuArticle({ setActiveTab, onOpenDownloadModal }: ComoSur
 
                 <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/90 hover:border-emerald-300 transition-colors flex items-start gap-3">
                   <div className="p-2 rounded-lg bg-amber-100/70 text-amber-700 shrink-0 mt-0.5">
-                    <Sparkles className="w-4 h-4" />
+                    <TrendingUp className="w-4 h-4" />
                   </div>
                   <div>
                     <h3 className="font-bold text-slate-900 text-sm sm:text-base">Fomentar o Hábito da Poupança</h3>
@@ -474,6 +480,7 @@ export function ComoSurgiuArticle({ setActiveTab, onOpenDownloadModal }: ComoSur
                     </p>
                   </div>
                 </div>
+
 
                 <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/90 hover:border-emerald-300 transition-colors flex items-start gap-3">
                   <div className="p-2 rounded-lg bg-purple-100/70 text-purple-700 shrink-0 mt-0.5">
@@ -644,13 +651,14 @@ export function ComoSurgiuArticle({ setActiveTab, onOpenDownloadModal }: ComoSur
               {/* Box 2: Inteligência Artificial */}
               <div className="p-5 sm:p-6 rounded-xl bg-amber-50/70 border-l-4 border-amber-500 border-y border-r border-amber-200/60 shadow-2xs">
                 <h3 className="text-sm sm:text-base font-bold text-amber-900 mb-2 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-amber-700" />
-                  <span>2. Compromisso com o Uso Responsável de Inteligência Artificial</span>
+                  <Lock className="w-4 h-4 text-amber-700" />
+                  <span>2. Automação Consciente e Proteção da Privacidade</span>
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-800 leading-relaxed">
-                  Quaisquer recursos baseados em inteligência artificial presentes na plataforma destinam-se unicamente a categorizar dados, auxiliar na visualização de resumos e sugerir boas práticas educativas de gestão. A tecnologia opera dentro de padrões rigorosos de ética, transparência e respeito à privacidade individual, <strong>não recolhendo dados sensíveis nem realizando aconselhamento de investimentos</strong>.
+                  Quaisquer recursos automatizados e de cálculo presentes na plataforma destinam-se unicamente a categorizar dados, auxiliar na visualização de resumos e sugerir boas práticas educativas de gestão. A tecnologia opera dentro de padrões rigorosos de ética, transparência e respeito à privacidade individual, <strong>não recolhendo dados sensíveis nem realizando aconselhamento de investimentos</strong>.
                 </p>
               </div>
+
 
               {/* Box 3: Gratuidade e Anúncios */}
               <div className="p-5 sm:p-6 rounded-xl bg-amber-50/70 border-l-4 border-amber-500 border-y border-r border-amber-200/60 shadow-2xs">
@@ -736,7 +744,7 @@ export function ComoSurgiuArticle({ setActiveTab, onOpenDownloadModal }: ComoSur
                       <span>•</span>
                       <span>Tamanho: ~9 KB</span>
                       <span>•</span>
-                      <span>Iniciativa: KwanzaFlow Angola</span>
+                      <span>Iniciativa: KwanzaFlow</span>
                     </div>
                   </div>
 
@@ -768,8 +776,9 @@ export function ComoSurgiuArticle({ setActiveTab, onOpenDownloadModal }: ComoSur
           {/* FOOTER OF ARTICLE */}
           <footer className="bg-slate-100 border-t border-slate-200 px-6 sm:px-10 py-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2">
             <span>KwanzaFlow — Tecnologia e Cidadania Financeira • Documento Público</span>
-            <span>URL Canónica: <strong>kwanzaflow.online/comosurgiu</strong></span>
+            <span>URL Canónica: <strong>kwanzaflow.online/sobre-nos</strong></span>
           </footer>
+
         </article>
 
         {/* Floating Play Store CTA */}

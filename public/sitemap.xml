@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- Página Principal -->
+  <url>
+    <loc>https://kwanzaflow.online/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Índice de Artigos Educativos e Científicos -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Artigo 1: Como Proteger o Dinheiro da Inflação em Angola -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/como-proteger-dinheiro-inflacao-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 2: A Regra 50/30/20 em Angola -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/como-dividir-salario-regra-50-30-20-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 3: Métodos Científicos para Quitar Dívidas (Bola de Neve vs. Avalanche) -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/como-quitar-dividas-bola-de-neve-avalanche-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 4: A Economia Comportamental da Kixikila -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/como-usar-kixikila-a-seu-favor-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 5: Guia Prático para Investir em Títulos do Tesouro (BODIVA) -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/como-investir-titulos-do-tesouro-bodiva-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 6: O Fundo de Emergência em Kwanzas -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/fundo-de-emergencia-em-kwanzas-como-construir-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 7: Microfinanças e Fluxo de Caixa para Pequenos Negócios -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/microfinancas-fluxo-de-caixa-pequenos-negocios-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 8: Planeamento Financeiro Familiar e Gestão de Despesas Domésticas -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/planeamento-financeiro-familiar-despesas-domesticas-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 9: Armadilhas Financeiras Comuns (Status, Crédito Informal e Ilusão Monetária) -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/armadilhas-financeiras-status-credito-ilusao-monetaria-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 10: Cidadania Financeira e Longevidade Económica -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/cidadania-financeira-longevidade-economica-ativos-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 11: Renda Informal: Como Gerir Ganhos Diários e Separar o Bolso do Negócio -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/renda-informal-gestao-diaria-separacao-bolso-negocio-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 12: Compras no Grossista vs. Retalho: Poupança no Mercado do 30 e Kikolo -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/compras-grossistas-mercado-30-kikolo-poupanca-familiar-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 13: As Despesas Invisíveis: Gerador, Água e Candongueiro em Luanda -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/despesas-invisiveis-agua-gerador-candongueiro-como-controlar-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 14: A Economia do Kupapata e Mototaxista em Angola -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/economia-mototaxista-kupapata-gestao-diaria-manutencao-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 15: Bancarização Popular e Multicaixa Express -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/bancarizacao-multicaixa-express-dinheiro-vivo-seguranca-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 16: Apoio à Família Alargada sem Sufocar as Suas Finanças -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/ajuda-familiar-sem-endividar-limites-orcamento-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 17: O Fim do Fiado na Cantina: Construindo Credibilidade Financeira -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/como-eliminar-fiado-na-cantina-construir-credibilidade-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 18: Educação Financeira para Crianças em Famílias Angolanas -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/educacao-financeira-filhos-poupanca-desde-cedo-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 19: Como Sobreviver e Prosperar com o Salário Mínimo em Angola -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/gestao-salario-minimo-nacional-priorizacao-essencial-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo 20: A Zunga e o Comércio Ambulante: Do Gasto Diário ao Capital de Giro -->
+  <url>
+    <loc>https://kwanzaflow.online/artigos/zungha-comercio-ambulante-lucro-real-capital-giro-angola</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Artigo Institucional Sobre Nós (Génese) -->
+  <url>
+    <loc>https://kwanzaflow.online/sobre-nos</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://kwanzaflow.online/comosurgiu</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+
+  <!-- Páginas Regulatórias e Institucionais -->
+  <url>
+    <loc>https://kwanzaflow.online/privacidade</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://kwanzaflow.online/termos</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://kwanzaflow.online/eliminar-conta</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>
