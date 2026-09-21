@@ -10,6 +10,9 @@ export function Features({ setActiveTab }: FeaturesProps) {
   // Interactive 50/30/20 Budget Calculator
   const [incomeInput, setIncomeInput] = useState<number>(150000);
 
+  // Simulador de Poder de Compra (Inflação)
+  const [inflationInitial, setInflationInitial] = useState<number>(10000);
+
   const needs = Math.round(incomeInput * 0.5);
   const wants = Math.round(incomeInput * 0.3);
   const savings = Math.round(incomeInput * 0.2);
@@ -276,6 +279,119 @@ export function Features({ setActiveTab }: FeaturesProps) {
                 </div>
                 <p className="text-xs text-slate-400 leading-relaxed">
                   Reserva de emergência, quotas mensais de Kixikila e investimento no seu micro-negócio.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Interactive Feature 2: Simulador de Poder de Compra (Inflação) */}
+        <div className="bg-white rounded-3xl p-6 sm:p-10 text-[#1e293b] shadow-xl border border-slate-200 mt-10">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-100">
+              <div>
+                <div className="flex items-center gap-2 text-emerald-600 font-bold text-xs uppercase tracking-wider mb-1">
+                  <TrendingUp className="w-4 h-4" />
+                  <span>Simulador de Poder de Compra</span>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-black text-[#0f172a]">
+                  Como a Inflação Afeta o seu Dinheiro ao Longo de 12 Meses
+                </h3>
+                <p className="text-sm text-[#64748b] mt-1">
+                  Veja em tempo real a erosão do poder de compra de um montante (ex: 10.000 Kz) face à desvalorização cambial e inflação estimada.
+                </p>
+              </div>
+
+              {/* Quick Config Box */}
+              <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 min-w-[280px]">
+                <label className="block text-xs text-slate-700 font-bold mb-1.5">
+                  Montante Inicial (Kwanzas):
+                </label>
+                <div className="relative mb-3">
+                  <input
+                    type="number"
+                    step="5000"
+                    min="1000"
+                    value={inflationInitial}
+                    onChange={(e) => setInflationInitial(Math.max(0, Number(e.target.value) || 0))}
+                    className="w-full bg-white text-[#0f172a] font-bold text-base px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#10b981] pl-3 pr-12"
+                  />
+                  <span className="absolute right-3 top-2.5 text-xs text-slate-500 font-bold">
+                    Kz
+                  </span>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setInflationInitial(10000)}
+                    className="text-[10px] bg-emerald-100 hover:bg-emerald-200 px-2.5 py-1 rounded-lg text-emerald-800 font-bold cursor-pointer"
+                  >
+                    10.000 Kz
+                  </button>
+                  <button
+                    onClick={() => setInflationInitial(50000)}
+                    className="text-[10px] bg-slate-200 hover:bg-slate-300 px-2.5 py-1 rounded-lg text-slate-700 font-bold cursor-pointer"
+                  >
+                    50.000 Kz
+                  </button>
+                  <button
+                    onClick={() => setInflationInitial(100000)}
+                    className="text-[10px] bg-slate-200 hover:bg-slate-300 px-2.5 py-1 rounded-lg text-slate-700 font-bold cursor-pointer"
+                  >
+                    100.000 Kz
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* 12 Months Purchasing Power Breakdown */}
+            <div className="mt-8">
+              <div className="flex items-center justify-between mb-4">
+                <h4 className="text-sm font-extrabold text-[#0f172a] uppercase tracking-wider">
+                  Evolução do Poder de Compra Real (Base: {formatKz(inflationInitial)})
+                </h4>
+                <span className="text-xs text-slate-500 bg-slate-100 px-2.5 py-1 rounded-lg font-medium">
+                  Estimativa de Inflação Anual: ~20% (~1.5% ao mês)
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                {[1, 3, 6, 9, 12].map((month) => {
+                  const monthlyRate = 0.20 / 12;
+                  const realValue = Math.round(inflationInitial / Math.pow(1 + monthlyRate, month));
+                  const lossPercent = Math.round((1 - realValue / inflationInitial) * 100);
+
+                  return (
+                    <div key={month} className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-center hover:border-emerald-300 transition-colors">
+                      <div className="text-xs font-bold text-slate-500 uppercase mb-1">Mês {month}</div>
+                      <div className="text-lg font-black text-[#0f172a] my-1">
+                        {formatKz(realValue)}
+                      </div>
+                      <div className="text-[11px] text-rose-600 font-semibold bg-rose-50 px-2 py-0.5 rounded-full inline-block">
+                        -{lossPercent}% poder
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {/* Summary Card for End of Year */}
+                <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 text-center flex flex-col justify-between">
+                  <div className="text-xs font-bold text-emerald-800 uppercase mb-1">Resumo Anual</div>
+                  <div>
+                    <div className="text-xs text-slate-600">Poder final</div>
+                    <div className="text-sm font-black text-emerald-900">
+                      {formatKz(Math.round(inflationInitial / Math.pow(1 + 0.20/12, 12)))}
+                    </div>
+                  </div>
+                  <span className="text-[10px] text-emerald-700 font-medium mt-1">Proteja com ativos produtivos</span>
+                </div>
+              </div>
+
+              <div className="mt-6 p-4 rounded-xl bg-amber-50 border border-amber-200/80 flex items-start gap-3">
+                <div className="p-1.5 rounded-lg bg-amber-100 text-amber-800 shrink-0 mt-0.5">
+                  <TrendingUp className="w-4 h-4" />
+                </div>
+                <p className="text-xs text-slate-700 leading-relaxed">
+                  <strong>Dica de Cidadania Financeira:</strong> Deixar dinheiro parado em notas sem rendimento sob efeito da inflação corrói o seu poder de compra. Conforme os artigos do <strong>KwanzaFlow</strong>, a melhor forma de defender o capital familiar é investir em ativos reais (como Títulos do Tesouro na BODIVA, Kixikila produtiva ou stock de mercadoria de giro rápido).
                 </p>
               </div>
             </div>

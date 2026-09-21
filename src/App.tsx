@@ -17,6 +17,18 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('inicio');
   const [articleSlug, setArticleSlug] = useState<string | null>(null);
   const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState<boolean>(() => {
+    return localStorage.getItem('kwanzaflow_theme') === 'dark';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('kwanzaflow_theme', darkMode ? 'dark' : 'light');
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
 
   // Synchronize with URL pathname and hash on load, popstate, and hashchange
   useEffect(() => {
@@ -81,12 +93,14 @@ export default function App() {
 
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f8fafc] text-[#1e293b] font-sans selection:bg-[#10b981] selection:text-white">
+    <div className={`min-h-screen flex flex-col font-sans selection:bg-[#10b981] selection:text-white ${darkMode ? 'dark bg-[#090d16] text-slate-100' : 'bg-[#f8fafc] text-[#1e293b]'}`}>
       {/* Navigation Header */}
       <Navbar
         activeTab={activeTab}
         setActiveTab={handleTabChange}
         onOpenDownloadModal={() => setIsDownloadModalOpen(true)}
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
       />
 
       {/* Main Content Area */}

@@ -151,12 +151,14 @@ export function KwanzaLogo({
 
       {withText && (
         <div className="flex flex-col">
-          <span className={`text-xl font-extrabold tracking-tight flex items-center gap-1.5 ${variant === 'dark' ? 'text-white' : 'text-[#0f172a]'}`}>
-            Kwanza<span className="text-[#10b981]">Flow</span>
+          <div className="flex items-center gap-1.5">
+            <span className={`text-xl font-extrabold tracking-tight ${variant === 'dark' ? 'text-white' : 'text-[#0f172a]'}`}>
+              Kwanza<span className="text-[#10b981]">Flow</span>
+            </span>
             <span className="hidden sm:inline-block text-[10px] uppercase font-bold tracking-wider bg-emerald-50 text-[#059669] px-1.5 py-0.5 rounded border border-emerald-200">
               AO
             </span>
-          </span>
+          </div>
           {subtitle && (
             <span className={`text-[10px] sm:text-[11px] font-medium -mt-0.5 truncate max-w-[220px] ${variant === 'dark' ? 'text-slate-400' : 'text-[#64748b]'}`}>
               Finanças Pessoais e Orçamento Familiar
