@@ -35,18 +35,36 @@ export function TermsOfUse({ setActiveTab }: TermsOfUseProps) {
               1. Natureza Informativa e Não Bancária do Serviço
             </h2>
             <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl mb-4 text-xs sm:text-sm text-amber-950">
-              <strong>AVISO LEGAL EXPRESSO:</strong> O <strong>KwanzaFlow</strong> (<a href="https://kwanzaflow.online" className="underline font-semibold" target="_blank" rel="noopener noreferrer">kwanzaflow.online</a>) é exclusivamente uma ferramenta tecnológica de organização pessoal, contabilidade simplificada de micro-negócios e apoio à poupança comunitária. O KwanzaFlow <u>NÃO É uma instituição bancária, financeira, emissora de moeda eletrónica, cooperativa de crédito nem prestador de serviços de pagamento regulado pelo Banco Nacional de Angola (BNA)</u>.
+              <strong>AVISO LEGAL EXPRESSO:</strong> O <strong>KwanzaFlow</strong> (<a href="https://kwanzaflow.online" className="underline font-semibold" target="_blank" rel="noopener noreferrer">kwanzaflow.online</a>) é exclusivamente uma ferramenta tecnológica de organização pessoal, organização financeira e registo simplificado de receitas e despesas de pequenos negócios, e apoio à poupança comunitária. O KwanzaFlow <u>NÃO É uma instituição bancária, financeira, emissora de moeda eletrónica, cooperativa de crédito nem prestador de serviços de pagamento regulado pelo Banco Nacional de Angola (BNA)</u>.
             </div>
             <p className="text-[#64748b]">
               O aplicativo não realiza custódia de fundos financeiros reais, não concede empréstimos, não intermedia cobranças compulsórias e não garante rendimentos de capital. Quaisquer montantes indicados no aplicativo em Kwanzas (Kz) correspondem a registos contábeis e apontamentos inseridos pelo próprio utilizador.
             </p>
           </div>
 
-          {/* Clause 2: Responsibilities of User */}
+          {/* Clause 2: AI Consulting */}
+          <div className="bg-white p-6 sm:p-7 rounded-2xl border border-[#e2e8f0] shadow-2xs">
+            <h2 className="text-lg font-bold text-[#0f172a] flex items-center gap-2 mb-3 border-b-2 border-[#10b981] pb-1 w-fit">
+              <FileText className="w-5 h-5 text-[#10b981]" />
+              2. Consultoria Financeira por Inteligência Artificial
+            </h2>
+            <p className="text-[#334155]">
+              O KwanzaFlow possui funcionalidades de assistência e consultoria financeira baseadas em Inteligência Artificial. Destaca-se que:
+            </p>
+            <ul className="list-disc pl-5 mt-3 space-y-2 text-sm text-[#64748b]">
+              <li>As respostas e orientações são geradas automaticamente por modelos tecnológicos e podem conter erros, omissões ou informações incompletas.</li>
+              <li>A inteligência artificial funciona estritamente como uma ferramenta informativa e de apoio à organização financeira pessoal.</li>
+              <li>Não constitui garantia de resultados financeiros futuros nem substitui em nenhuma circunstância aconselhamento profissional qualificado.</li>
+              <li>O utilizador deve sempre verificar informações importantes antes de tomar quaisquer decisões de investimento ou gestão financeira.</li>
+              <li>As informações necessárias para responder às consultas podem ser processadas pelos serviços de IA utilizados pelo KwanzaFlow, conforme detalhado na Política de Privacidade.</li>
+            </ul>
+          </div>
+
+          {/* Clause 3: Responsibilities of User */}
           <div className="bg-white p-6 sm:p-7 rounded-2xl border border-[#e2e8f0] shadow-2xs">
             <h2 className="text-lg font-bold text-[#0f172a] flex items-center gap-2 mb-3 border-b-2 border-[#10b981] pb-1 w-fit">
               <ShieldCheck className="w-5 h-5 text-[#10b981]" />
-              2. Responsabilidades do Utilizador
+              3. Responsabilidades do Utilizador
             </h2>
             <p>
               Ao utilizar a plataforma, o utilizador assume e declara que:
@@ -64,36 +82,53 @@ export function TermsOfUse({ setActiveTab }: TermsOfUseProps) {
             </ul>
           </div>
 
-          {/* Clause 3: Kixikila Disclaimer */}
+          {/* Clause 4: Kixikila Disclaimer */}
           <div className="bg-white p-6 sm:p-7 rounded-2xl border border-[#e2e8f0] shadow-2xs">
             <h2 className="text-lg font-bold text-[#0f172a] flex items-center gap-2 mb-3 border-b-2 border-amber-500 pb-1 w-fit">
               <AlertTriangle className="w-5 h-5 text-amber-600" />
-              3. Regras e Isenção de Responsabilidade sobre a Kixikila
+              4. Regras e Isenção de Responsabilidade sobre a Kixikila
             </h2>
             <p>
               O módulo de <strong>Kixikila</strong> do KwanzaFlow atua unicamente como um livro-razão digital e facilitador de comunicação para rondas de poupança voluntária entre pessoas de confiança recíproca.
             </p>
             <p className="mt-2 text-sm text-[#64748b]">
-              O KwanzaFlow não recolhe nem retém o montante das quotas de Kixikila, não atua como fiador de membros inadimplentes e não possui autoridade legal para intervir em disputas financeiras internas entre os membros de um grupo.
+              Os pagamentos e transferências entre os participantes são realizados diretamente entre os próprios membros, fora do KwanzaFlow. O KwanzaFlow não recebe, mantém, movimenta ou custodia os valores das contribuições.
+            </p>
+            <p className="mt-2 text-sm text-[#64748b]">
+              O KwanzaFlow não atua como fiador de membros inadimplentes e não possui autoridade legal para intervir em disputas financeiras internas entre os membros de um grupo.
             </p>
           </div>
 
-          {/* Clause 4: Intellectual Property */}
+          {/* Clause 5: Third-Party Services & Privacy Policy */}
+          <div className="bg-white p-6 sm:p-7 rounded-2xl border border-[#e2e8f0] shadow-2xs">
+            <h2 className="text-lg font-bold text-[#0f172a] flex items-center gap-2 mb-3 border-b-2 border-[#10b981] pb-1 w-fit">
+              <FileText className="w-5 h-5 text-[#10b981]" />
+              5. Publicidade e Serviços de Terceiros
+            </h2>
+            <p className="text-[#64748b]">
+              O KwanzaFlow utiliza serviços tecnológicos de terceiros, incluindo publicidade, infraestrutura em nuvem e outros serviços necessários ao funcionamento, conforme detalhado na Política de Privacidade.
+            </p>
+            <div className="mt-3 p-3.5 bg-emerald-50 rounded-xl border border-emerald-200 text-xs sm:text-sm text-emerald-900">
+              <strong>Protecção de Dados:</strong> O tratamento dos dados pessoais e financeiros do utilizador é realizado conforme descrito na <a href="#privacidade" onClick={(e) => { e.preventDefault(); setActiveTab('privacidade'); window.scrollTo({top:0, behavior:'smooth'}); }} className="underline font-bold text-emerald-700">Política de Privacidade do KwanzaFlow</a>.
+            </div>
+          </div>
+
+          {/* Clause 6: Intellectual Property */}
           <div className="bg-white p-6 sm:p-7 rounded-2xl border border-[#e2e8f0] shadow-2xs">
             <h2 className="text-lg font-bold text-[#0f172a] flex items-center gap-2 mb-3 border-b-2 border-[#10b981] pb-1 w-fit">
               <Copyright className="w-5 h-5 text-[#10b981]" />
-              4. Propriedade Intelectual
+              6. Propriedade Intelectual
             </h2>
             <p className="text-[#64748b]">
               A marca <strong>KwanzaFlow</strong>, o logótipo, a interface do utilizador, textos, gráficos e o código-fonte associado são propriedade exclusiva dos desenvolvedores, protegidos pelas leis angolanas e tratados internacionais de propriedade intelectual.
             </p>
           </div>
 
-          {/* Clause 5: Limitation of Liability */}
+          {/* Clause 7: Modifications and Support */}
           <div className="bg-white p-6 sm:p-7 rounded-2xl border border-[#e2e8f0] shadow-2xs">
             <h2 className="text-lg font-bold text-[#0f172a] flex items-center gap-2 mb-3 border-b-2 border-[#10b981] pb-1 w-fit">
               <RefreshCw className="w-5 h-5 text-[#10b981]" />
-              5. Modificações e Suporte
+              7. Modificações e Suporte
             </h2>
             <p>
               Reservamo-nos o direito de atualizar periodicamente estes Termos para refletir melhorias no serviço.

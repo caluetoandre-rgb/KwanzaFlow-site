@@ -175,6 +175,14 @@ export function KixikilaSection({ onOpenDownloadModal, setActiveTab }: KixikilaS
               </div>
             </div>
           </div>
+
+          {/* Legal / Transparency Disclaimer for Kixikila */}
+          <div className="mt-8 pt-6 border-t border-slate-800 text-xs text-slate-400 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2.5">
+              <ShieldCheck className="w-5 h-5 text-[#10b981] flex-shrink-0" />
+              <span><strong>Nota de Transparência P2P:</strong> Os pagamentos e transferências entre os participantes da Kixikila são realizados diretamente entre os próprios membros, fora do KwanzaFlow. O KwanzaFlow atua unicamente como livro-razão digital e facilitador de comunicação, não recebendo, mantendo, movimentando ou custodiando valores.</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
