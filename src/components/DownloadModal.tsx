@@ -79,7 +79,7 @@ export function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
 
 
           <p className="text-[11px] text-center text-[#64748b]">
-            Gratuito • Sem taxas ocultas • Sincronização segura via Firebase
+            Gratuito • Sem taxas ocultas • Sincronização segura em nuvem
           </p>
 
           {/* Facebook Official Community Link */}

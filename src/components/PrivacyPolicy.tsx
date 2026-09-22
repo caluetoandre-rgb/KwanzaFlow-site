@@ -85,38 +85,38 @@ export function PrivacyPolicy({ setActiveTab }: PrivacyPolicyProps) {
             <p>
               O KwanzaFlow adota o princípio da minimização de dados, recolhendo e processando as seguintes categorias conforme necessário para a prestação dos serviços:
             </p>
-            <ul className="list-disc pl-5 mt-3 space-y-3 text-[#64748b] text-xs sm:text-sm">
+             <ul className="list-disc pl-5 mt-3 space-y-3 text-[#64748b] text-xs sm:text-sm">
               <li>
                 <strong className="text-[#0f172a] block">Nome, E-mail, Foto de Perfil e Dados de Autenticação:</strong>
-                <span><strong>Finalidade:</strong> Identificação da conta e login seguro via Google Sign-In. <strong>Processamento/Armazenamento:</strong> Firebase Authentication e Firestore (nuvem segura). <strong>Partilha:</strong> Não partilhado com terceiros, exceto infraestrutura Google de autenticação.</span>
+                <span><strong>Finalidade:</strong> Identificação da conta e login seguro. <strong>Processamento/Armazenamento:</strong> Serviços de autenticação e armazenamento seguro em nuvem. <strong>Partilha:</strong> Não partilhado com terceiros, exceto infraestrutura oficial de suporte.</span>
               </li>
               <li>
                 <strong className="text-[#0f172a] block">Receitas, Despesas, Categorias, Orçamento, Metas e Dívidas:</strong>
-                <span><strong>Finalidade:</strong> Registo contábil e cálculo de orçamentos pessoais. <strong>Processamento/Armazenamento:</strong> Firestore (nuvem). <strong>Partilha:</strong> Exclusivo do utilizador.</span>
+                <span><strong>Finalidade:</strong> Registo contábil e cálculo de orçamentos pessoais. <strong>Processamento/Armazenamento:</strong> Servidor seguro em nuvem. <strong>Partilha:</strong> Exclusivo do utilizador.</span>
               </li>
               <li>
                 <strong className="text-[#0f172a] block">Dados de Kixikila:</strong>
-                <span><strong>Finalidade:</strong> Organização de rondas de poupança voluntária e registo de quotas. <strong>Processamento/Armazenamento:</strong> Firestore. <strong>Partilha:</strong> Partilhado unicamente com os membros autorizados do respetivo grupo de kixikila.</span>
+                <span><strong>Finalidade:</strong> Organização de rondas de poupança voluntária e registo de quotas. <strong>Processamento/Armazenamento:</strong> Base de dados segura em nuvem. <strong>Partilha:</strong> Partilhado unicamente com os membros autorizados do respetivo grupo de kixikila.</span>
               </li>
               <li>
                 <strong className="text-[#0f172a] block">Dados de Pequenos Negócios:</strong>
-                <span><strong>Finalidade:</strong> Organização financeira e registo simplificado de receitas e despesas de pequenos negócios. <strong>Processamento/Armazenamento:</strong> Firestore. <strong>Partilha:</strong> Exclusivo do utilizador.</span>
+                <span><strong>Finalidade:</strong> Organização financeira e registo simplificado de receitas e despesas de pequenos negócios. <strong>Processamento/Armazenamento:</strong> Servidor seguro em nuvem. <strong>Partilha:</strong> Exclusivo do utilizador.</span>
               </li>
               <li>
                 <strong className="text-[#0f172a] block">Dados de Recibos e Imagens Capturadas pela Câmera:</strong>
-                <span><strong>Finalidade:</strong> Leitura de comprovativos e anexação opcional a registos financeiros. <strong>Processamento/Armazenamento:</strong> Processado localmente ou em servidor seguro para extração de dados. <strong>Partilha:</strong> Não comercializado.</span>
+                <span><strong>Finalidade:</strong> Leitura de comprovativos e anexação opcional a registos financeiros. <strong>Processamento/Armazenamento:</strong> Processamento seguro para extração de dados. <strong>Partilha:</strong> Não comercializado.</span>
               </li>
               <li>
                 <strong className="text-[#0f172a] block">Dados Processados pela IA (Consultoria Financeira):</strong>
-                <span><strong>Finalidade:</strong> Geração de respostas automáticas de assistência financeira. <strong>Processamento/Armazenamento:</strong> Processado via Firebase AI Logic / Google Gemini. <strong>Partilha:</strong> Servidores Google de IA para fins exclusivos de inferência da resposta.</span>
+                <span><strong>Finalidade:</strong> Geração de respostas automáticas de assistência financeira. <strong>Processamento/Armazenamento:</strong> Processado via serviços avançados de inteligência artificial. <strong>Partilha:</strong> Fornecedores credenciados de IA para fins exclusivos de inferência da resposta.</span>
               </li>
               <li>
-                <strong className="text-[#0f172a] block">Identificadores do Dispositivo, Dados de Diagnóstico e Analytics/Crashlytics:</strong>
-                <span><strong>Finalidade:</strong> Diagnosticar problemas, monitorizar estabilidade e analisar métricas de utilização. <strong>Processamento/Armazenamento:</strong> Google Firebase Crashlytics e Analytics. <strong>Partilha:</strong> Google LLC para relatórios técnicos agregados.</span>
+                <strong className="text-[#0f172a] block">Identificadores do Dispositivo, Dados de Diagnóstico e Análise:</strong>
+                <span><strong>Finalidade:</strong> Diagnosticar problemas, monitorizar estabilidade e analisar métricas de utilização. <strong>Processamento/Armazenamento:</strong> Ferramentas de diagnóstico técnico e telemetria. <strong>Partilha:</strong> Fornecedor tecnológico para relatórios técnicos agregados.</span>
               </li>
               <li>
                 <strong className="text-[#0f172a] block">Dados de Publicidade:</strong>
-                <span><strong>Finalidade:</strong> Exibição de anúncios para manutenção da gratuidade do app. <strong>Processamento/Armazenamento:</strong> Google AdMob / AdSense. <strong>Partilha:</strong> Redes parceiras de publicidade autorizadas.</span>
+                <span><strong>Finalidade:</strong> Exibição de anúncios para manutenção da gratuidade do app. <strong>Processamento/Armazenamento:</strong> Plataformas de publicidade autorizadas. <strong>Partilha:</strong> Redes parceiras de publicidade.</span>
               </li>
             </ul>
           </div>
@@ -128,11 +128,11 @@ export function PrivacyPolicy({ setActiveTab }: PrivacyPolicyProps) {
               3. Inteligência Artificial e Consultoria Financeira
             </h2>
             <p className="text-[#334155] leading-relaxed">
-              O KwanzaFlow inclui funcionalidades de consultoria e assistência baseadas em Inteligência Artificial (serviços de IA da Google). As informações financeiras fornecidas pelo utilizador durante as interações podem fazer parte do contexto necessário para que o modelo processe e elabore a resposta.
+              O KwanzaFlow inclui funcionalidades de consultoria e assistência baseadas em Inteligência Artificial. As informações financeiras fornecidas pelo utilizador durante as interações podem fazer parte do contexto necessário para que o modelo processe e elabore a resposta.
             </p>
             <ul className="list-disc pl-5 mt-3 space-y-2 text-xs sm:text-sm text-[#64748b]">
-              <li><strong>Serviços Utilizados:</strong> Firebase AI Logic e modelos Google Gemini.</li>
-              <li><strong>Armazenamento e Retenção:</strong> Os prompts e respostas podem ser processados em servidores externos da Google para inferência, sendo retidos conforme as políticas de IA aplicáveis da Google.</li>
+              <li><strong>Serviços Utilizados:</strong> Infraestrutura certificada de inteligência artificial.</li>
+              <li><strong>Armazenamento e Retenção:</strong> Os prompts e respostas podem ser processados em servidores externos para inferência, sendo retidos conforme as políticas aplicáveis de IA.</li>
               <li><strong>Impacto da Eliminação de Conta:</strong> Ao eliminar a sua conta e dados no KwanzaFlow, os registos associados são purgados dos nossos servidores.</li>
               <li><strong>Limitações:</strong> As respostas geradas pela IA podem conter erros, omissões ou imprecisões e não constituem garantia de resultados financeiros nem substituem aconselhamento profissional.</li>
             </ul>
@@ -159,11 +159,11 @@ export function PrivacyPolicy({ setActiveTab }: PrivacyPolicyProps) {
               O KwanzaFlow não vende nem aluga os dados financeiros pessoais dos utilizadores. Determinados dados podem ser processados por fornecedores tecnológicos necessários à prestação dos serviços:
             </p>
             <ul className="list-disc pl-5 mt-3 space-y-2 text-xs sm:text-sm text-[#64748b]">
-              <li><strong>Google Firebase / Firestore:</strong> Infraestrutura em nuvem para armazenamento seguro de dados e sincronização.</li>
-              <li><strong>Firebase Authentication:</strong> Gestão de início de sessão seguro via contas Google.</li>
-              <li><strong>Firebase Crashlytics:</strong> Recolha de relatórios técnicos de falhas e erros de execução.</li>
-              <li><strong>Google AdMob / AdSense:</strong> Veiculação de anúncios publicitários para suporte à gratuidade da plataforma.</li>
-              <li><strong>Google AI / Gemini:</strong> Processamento de consultas e assistência financeira por inteligência artificial.</li>
+              <li><strong>Infraestrutura Segura em Nuvem:</strong> Armazenamento seguro de dados e sincronização de contas.</li>
+              <li><strong>Serviços de Autenticação:</strong> Gestão de início de sessão seguro.</li>
+              <li><strong>Ferramentas de Diagnóstico:</strong> Recolha de relatórios técnicos de falhas e erros de execução.</li>
+              <li><strong>Plataformas de Publicidade:</strong> Veiculação de anúncios publicitários para suporte à gratuidade da plataforma.</li>
+              <li><strong>Serviços de Inteligência Artificial:</strong> Processamento de consultas e assistência financeira automatizada.</li>
             </ul>
           </div>
 
@@ -176,11 +176,11 @@ export function PrivacyPolicy({ setActiveTab }: PrivacyPolicyProps) {
             <div className="space-y-4 text-xs sm:text-sm text-[#475569]">
               <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
                 <strong className="text-slate-900 block font-semibold mb-1">Cookies e armazenamento no portal web (kwanzaflow.online):</strong>
-                <p>O portal web utiliza cookies técnicos essenciais para gestão de sessões, segurança contra fraudes (CSRF) e preferências. O utilizador pode gerir ou bloquear cookies através do seu navegador.</p>
+                <p>O portal web utiliza cookies técnicos essenciais para gestão de sessões, segurança e preferências. O utilizador pode gerir ou bloquear cookies através do seu navegador.</p>
               </div>
               <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
                 <strong className="text-slate-900 block font-semibold mb-1">Identificadores e tecnologias utilizadas no aplicativo móvel:</strong>
-                <p>O aplicativo móvel utiliza identificadores de publicidade do sistema operativo e SDKs oficiais (como Firebase e AdMob) para suporte técnico e medição de desempenho de anúncios.</p>
+                <p>O aplicativo móvel utiliza identificadores de publicidade do sistema operativo e SDKs oficiais de suporte técnico e medição de desempenho de anúncios.</p>
               </div>
             </div>
           </div>

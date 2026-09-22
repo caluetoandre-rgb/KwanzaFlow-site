@@ -278,13 +278,13 @@ export function AccountDeletion() {
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#10b981] flex-shrink-0 mt-0.5" />
                 <span>
-                  <strong className="text-[#0f172a]">Registo de Autenticação:</strong> Desativação e exclusão definitiva do perfil (UID e e-mail) no Google Firebase Authentication.
+                  <strong className="text-[#0f172a]">Registo de Autenticação:</strong> Desativação e exclusão definitiva do perfil de acesso e e-mail.
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#10b981] flex-shrink-0 mt-0.5" />
                 <span>
-                  <strong className="text-[#0f172a]">Documentos no Firestore:</strong> Purga irreversível de lançamentos, categorias e orçamentos 50/30/20.
+                  <strong className="text-[#0f172a]">Dados na Base de Dados:</strong> Purga irreversível de lançamentos, categorias e orçamentos 50/30/20.
                 </span>
               </li>
               <li className="flex items-start gap-2">
@@ -672,7 +672,7 @@ export function AccountDeletion() {
                 </div>
 
                 <div className="flex justify-between items-center pb-2 border-b border-[#e2e8f0]">
-                  <span className="text-[#64748b] font-medium">Status no Firebase:</span>
+                  <span className="text-[#64748b] font-medium">Status do Sistema:</span>
                   <span className="inline-flex items-center gap-1 text-[#10b981] font-bold">
                     <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span>
                     Em processamento prioritário
@@ -687,7 +687,7 @@ export function AccountDeletion() {
 
               {/* Instructions Callout */}
               <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 max-w-lg mx-auto text-xs text-slate-700 leading-relaxed">
-                <strong>O que acontece a seguir:</strong> O seu perfil no Firebase Authentication será desativado e todos os registros financeiros e kixikilas vinculados ao seu usuário serão purgados de forma permanente nos servidores Google Cloud.
+                <strong>O que acontece a seguir:</strong> O seu perfil de acesso será desativado e todos os registos financeiros e kixikilas vinculados ao seu utilizador serão purgados de forma permanente nos servidores seguros em nuvem.
               </div>
 
               <div className="text-center pt-2">
